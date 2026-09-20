@@ -2494,8 +2494,9 @@ window.sendBankVaultTestNotification = async function () {
       );
 
       alert(
-        "Unable to send the notification."
-      );
+  "Push error: " +
+  (error?.message || "Unknown error")
+);
 
       return;
     }
