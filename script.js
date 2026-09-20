@@ -2463,3 +2463,60 @@ window.enableBankVaultNotifications = async function () {
     );
   }
 };
+window.sendBankVaultTestNotification = async function () {
+  try {
+    const {
+      data: { session },
+      error: sessionError
+    } = await supabase.auth.getSession();
+
+    if (sessionError || !session) {
+      alert("Please log in first.");
+      return;
+    }
+
+    const { data, error } =
+      await supabase.functions.invoke(
+        "send-push",
+        {
+          body: {
+            title: "Bank Vault",
+            body: "Your Bank Vault push notifications are working.",
+            url: "/"
+          }
+        }
+      );
+
+    if (error) {
+      console.error(
+        "Push function error:",
+        error
+      );
+
+      alert(
+        "Unable to send the notification."
+      );
+
+      return;
+    }
+
+    console.log(
+      "Push notification result:",
+      data
+    );
+
+    alert(
+      "Notification sent successfully."
+    );
+
+  } catch (error) {
+    console.error(
+      "Test notification error:",
+      error
+    );
+
+    alert(
+      "Unable to send the notification."
+    );
+  }
+};
