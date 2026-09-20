@@ -2339,7 +2339,22 @@ if ("serviceWorker" in navigator) {
   });
 }
 
- window.enableBankVaultNotifications = async function () {
+ function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+
+  const base64 = (base64String + padding)
+    .replace(/-/g, "+")
+    .replace(/_/g, "/");
+
+  const rawData = window.atob(base64);
+
+  return Uint8Array.from(
+    [...rawData].map(char => char.charCodeAt(0))
+  );
+}
+
+
+window.enableBankVaultNotifications = async function () {
   try {
     if (!("Notification" in window)) {
       alert("Notifications are not supported on this device.");
@@ -2351,35 +2366,100 @@ if ("serviceWorker" in navigator) {
       return;
     }
 
-    const permission = await Notification.requestPermission();
-
-    if (permission === "granted") {
-      alert("Bank Vault notifications are enabled.");
-    } else if (permission === "denied") {
-      alert("Notifications are blocked. Enable them in your browser settings.");
-    } else {
-      alert("Notification permission was not granted.");
+    if (!("PushManager" in window)) {
+      alert("Push notifications are not supported on this device.");
+      return;
     }
 
-  } catch (error) {
-    console.error("Notification error:", error);
-    alert("Unable to enable notifications.");
-  }
-}
+    const {
+      data: { user },
+      error: userError
+    } = await supabase.auth.getUser();
 
-window.testBankVaultNotification = async function () {
-  try {
+    if (userError || !user) {
+      alert("Please log in first.");
+      return;
+    }
+
+    const permission = await Notification.requestPermission();
+
+    if (permission !== "granted") {
+      if (permission === "denied") {
+        alert(
+          "Notifications are blocked. Enable them in your browser settings."
+        );
+      } else {
+        alert("Notification permission was not granted.");
+      }
+
+      return;
+    }
+
     const registration = await navigator.serviceWorker.ready;
 
-    await registration.showNotification("Bank Vault", {
-      body: "Your Bank Vault notifications are working.",
-      icon: "/icon-192.png",
-      badge: "/icon-192.png",
-      vibrate: [200, 100, 200]
-    });
+    let subscription =
+      await registration.pushManager.getSubscription();
+
+    if (!subscription) {
+      subscription =
+        await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+
+          applicationServerKey:
+            urlBase64ToUint8Array(
+              "BI7n11elHSW2ommddDiRJHzLq5E-KlvH8orqxSU3bqMxnzhHYSJVWj11vtRGcXfC6C1xWsp9fVBynQajtAmC5R4"
+            )
+        });
+    }
+
+    const subscriptionJson =
+      subscription.toJSON();
+
+    const { error: saveError } =
+      await supabase
+        .from("push_subscriptions")
+        .upsert(
+          {
+            user_id: user.id,
+            endpoint: subscriptionJson.endpoint,
+            p256dh: subscriptionJson.keys.p256dh,
+            auth: subscriptionJson.keys.auth
+          },
+          {
+            onConflict: "endpoint"
+          }
+        );
+
+    if (saveError) {
+      console.error(
+        "Subscription save error:",
+        saveError
+      );
+
+      alert(
+        "Notification permission worked, but the device subscription could not be saved."
+      );
+
+      return;
+    }
+
+    console.log(
+      "Bank Vault push subscription saved:",
+      subscriptionJson
+    );
+
+    alert(
+      "Bank Vault notifications are enabled on this device."
+    );
 
   } catch (error) {
-    console.error("Test notification error:", error);
-    alert("Unable to send test notification.");
+    console.error(
+      "Notification subscription error:",
+      error
+    );
+
+    alert(
+      "Unable to enable notifications."
+    );
   }
 };
