@@ -1,0 +1,654 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07110d">
+  <title>Bank Vault</title>  <link rel="stylesheet" href="style.css">
+</head><body>  <!-- WELCOME -->  <section id="welcomeScreen" class="screen">
+    <div class="welcome-content">  <div class="logo">BV</div>
+
+  <h1>Bank Vault</h1>
+
+  <p>
+    Keep your financial information organized
+    in one place.
+  </p>
+
+  <button
+    id="getStartedButton"
+    class="primary-button"
+    type="button"
+  >
+    Get Started
+  </button>
+  
+
+</div>
+
+  <div class="security-badge">
+
+  <div class="security-badge-icon">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 3L19 6V11.5C19 16.2 16.1 19.5 12 21C7.9 19.5 5 16.2 5 11.5V6L12 3Z"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M9 12L11 14L15 10"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </div>
+
+  <div class="security-badge-text">
+    <strong>Protected by Supabase</strong>
+    <span>Your stored records are protected using account-based access controls.</span>
+  </div>
+
+</div>
+
+  </section>  <!-- AUTH -->  <section id="authScreen" class="screen"><div class="auth-container">
+
+  <button
+    id="backButton"
+    class="back-button"
+    type="button"
+  >
+    ‹
+  </button>
+
+  <div class="auth-logo">BV</div>
+
+  <h2 id="authTitle">Welcome back</h2>
+
+  <p>
+    Access your Bank Vault.
+  </p>
+
+  <div class="auth-tabs">
+
+    <button
+      id="loginTab"
+      class="auth-tab active"
+      type="button"
+    >
+      Log In
+    </button>
+
+    <button
+      id="signupTab"
+      class="auth-tab"
+      type="button"
+    >
+      Sign Up
+    </button>
+
+  </div>
+
+  <form id="authForm">
+
+    <div
+      id="nameField"
+      class="input-group"
+      style="display:none;"
+    >
+      <label for="nameInput">Full Name</label>
+
+      <input
+        id="nameInput"
+        type="text"
+        placeholder="Your name"
+      >
+    </div>
+
+    <div class="input-group">
+
+      <label for="emailInput">Email</label>
+
+      <input
+        id="emailInput"
+        type="email"
+        placeholder="you@example.com"
+        required
+      >
+
+    </div>
+
+    <div class="input-group">
+
+      <label for="passwordInput">Password</label>
+
+      <input
+        id="passwordInput"
+        type="password"
+        placeholder="Enter your password"
+        required
+      >
+
+    </div>
+
+    <button
+      class="primary-button auth-submit"
+      type="submit"
+    >
+      Continue
+    </button>
+
+  </form>
+
+</div>
+
+  </section>  <!-- DASHBOARD -->  <section id="dashboardScreen" class="screen"><div class="dashboard-container">
+
+  <div class="topbar">
+
+    <div class="brand">
+
+      <div class="brand-logo">BV</div>
+
+      <div class="brand-text">
+        <strong>Bank Vault</strong>
+        <span>Your financial records</span>
+      </div>
+
+    </div>
+
+    <button
+      id="menuButton"
+      class="menu-button"
+      type="button"
+    >
+      ⋯
+    </button>
+    <button
+  id="adminButton"
+  class="menu-button"
+  type="button"
+  style="display:none;"
+>
+  Admin
+</button>
+
+  </div>
+
+
+  <div class="balance-card">
+
+    <div class="balance-label">
+      Total Records
+    </div>
+
+    <div
+      id="totalRecords"
+      class="balance-number"
+    >
+      0
+    </div>
+
+    <div class="balance-sub">
+      Organized across your vault
+    </div>
+
+  </div>
+
+
+  
+    
+    <div class="security-badge">
+
+  <div class="security-badge-icon">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 3L19 6V11.5C19 16.2 16.1 19.5 12 21C7.9 19.5 5 16.2 5 11.5V6L12 3Z"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M9 12L11 14L15 10"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </div>
+
+  <div class="security-badge-text">
+    <strong>Protected by Supabase</strong>
+    <span>Your stored records are protected using account-based access controls.</span>
+  </div>
+
+</div>
+    <div class="section-heading">
+
+    <h2>Categories</h2>
+
+    <span>12 categories</span>
+
+  </div>
+  
+  <button
+  type="button"
+  class="notification-button"
+  onclick="window.testBankVaultNotification()"
+  
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M10 21h4"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+    />
+  </svg>
+
+  <span>Enable Notifications</span>
+</button>
+
+
+  <div class="category-grid">
+
+    <button class="category" data-category="Bank Details" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 10h18M4 10v9M8 10v9M12 10v9M16 10v9M20 10v9M2 20h20M12 3l10 5H2l10-5z"/>
+        </svg>
+      </div>
+      <span class="category-name">Bank Details</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Cards" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M3 10h18M7 15h4"/>
+        </svg>
+      </div>
+      <span class="category-name">Cards</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Crypto" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M9 7h4a2 2 0 0 1 0 4H9h4a2 2 0 0 1 0 4H9M10 5v14M13 5v2M13 17v2"/>
+        </svg>
+      </div>
+      <span class="category-name">Crypto</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Digital Wallets" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12H6a2 2 0 0 1-2-2V7z"/>
+          <path d="M4 8h14a2 2 0 0 1 2 2v3h-6a2 2 0 0 1 0-4h6"/>
+        </svg>
+      </div>
+      <span class="category-name">Digital Wallets</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Loans" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 3h10l4 4v14H5z"/>
+          <path d="M15 3v5h4M8 12h8M8 16h5"/>
+        </svg>
+      </div>
+      <span class="category-name">Loans</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Savings & Investments" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 19V5M4 19h17"/>
+          <path d="M7 15l4-4 3 2 6-7"/>
+        </svg>
+      </div>
+      <span class="category-name">Savings & Investments</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Bank Contacts" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="9" cy="8" r="3"/>
+          <path d="M3 20a6 6 0 0 1 12 0"/>
+          <circle cx="17" cy="9" r="2"/>
+          <path d="M15 15a5 5 0 0 1 6 5"/>
+        </svg>
+      </div>
+      <span class="category-name">Bank Contacts</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Bank Branches" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+      </div>
+      <span class="category-name">Bank Branches</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Beneficiaries" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="9" cy="8" r="3"/>
+          <path d="M3 20a6 6 0 0 1 12 0M17 8v6M14 11h6"/>
+        </svg>
+      </div>
+      <span class="category-name">Beneficiaries</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Payment Details" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M3 10h18M7 15h3"/>
+        </svg>
+      </div>
+      <span class="category-name">Payment Details</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Financial Documents" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z"/>
+          <path d="M15 3v5h4M9 12h6M9 16h6"/>
+        </svg>
+      </div>
+      <span class="category-name">Financial Documents</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+
+    <button class="category" data-category="Other Financial Information" type="button">
+      <div class="category-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="5" cy="12" r="1.5"/>
+          <circle cx="12" cy="12" r="1.5"/>
+          <circle cx="19" cy="12" r="1.5"/>
+        </svg>
+      </div>
+      <span class="category-name">Other Information</span>
+      <span class="category-count">0 records</span>
+    </button>
+
+  </div>
+
+</div>
+
+
+<nav class="bottom-nav">
+
+  <button
+    class="nav-button active"
+    id="homeNavButton"
+    type="button"
+  >
+    ⌂
+  </button>
+
+  <button
+    class="nav-button"
+    id="searchNavButton"
+    type="button"
+  >
+    ⌕
+  </button>
+
+  <button
+    class="nav-button"
+    id="settingsNavButton"
+    type="button"
+  >
+    ⚙
+  </button>
+
+</nav>
+
+  </section> 
+  <!-- ADMIN DASHBOARD -->
+<section id="adminScreen" class="screen">
+
+  <div class="category-header">
+
+    <button
+      id="adminBackButton"
+      class="category-back"
+      type="button"
+    >
+      ‹
+    </button>
+
+    <h1>Admin Dashboard</h1>
+
+  </div>
+
+  <div class="category-body">
+
+    <div class="category-intro">
+
+      <h2>User Records</h2>
+
+      <p>
+        Never expose any of your stored details to a third party even if they claim to be an authorized agent.
+      </p>
+
+    </div>
+
+    <div id="adminRecords">
+      Loading...
+    </div>
+
+  </div>
+
+</section>
+ <!-- SETTINGS -->
+<section id="settingsScreen" class="screen">
+
+  <div class="category-header">
+
+    <button
+      id="settingsBackButton"
+      class="category-back"
+      type="button"
+    >
+      ‹
+    </button>
+
+    <h1>Settings</h1>
+
+  </div>
+
+  <div class="category-body">
+
+    <div class="category-intro">
+
+      <h2>Account Settings</h2>
+
+      <p>
+        Manage your Bank Vault account.
+      </p>
+
+    </div>
+
+    <button
+      id="logoutButton"
+      class="menu-button"
+      type="button"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</section>
+  <!-- CATEGORY -->  <section id="categoryScreen" class="screen"><div id="categoryPage" class="category-page">
+
+  <div class="category-header">
+
+    <button
+      id="categoryBackButton"
+      class="category-back"
+      type="button"
+    >
+      ‹
+    </button>
+
+    <h1 id="categoryTitle">Bank Details</h1>
+
+  </div>
+
+
+  <div class="category-body">
+
+    <div class="category-intro">
+
+      <h2 id="categoryHeading">Bank Details</h2>
+
+      <p>
+        Keep your records organized in this category.
+      </p>
+
+    </div>
+
+
+    <div class="empty-state">
+
+      <div class="empty-icon">+</div>
+
+      <h3>No records yet</h3>
+
+      <p>
+        Add your first details to this category.
+      </p>
+
+      <button
+        id="addRecordButton"
+        class="add-record-button"
+        type="button"
+      >
+        Add Record
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+  </section>  <!-- SEARCH -->  <section id="searchScreen" class="screen"><div class="category-header">
+
+  <button
+    id="searchBackButton"
+    class="category-back"
+    type="button"
+  >
+    ‹
+  </button>
+
+  <h1>Search</h1>
+
+</div>
+
+<div class="category-body">
+
+  <div class="input-group">
+
+    <label for="searchInput">
+      Search your records
+    </label>
+
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="Search..."
+      autocomplete="off"
+    >
+
+  </div>
+
+  <div id="searchResults"></div>
+
+</div>
+
+</section>
+
+  <!-- RECORD -->
+<section id="recordScreen" class="screen">
+
+  <div class="category-header">
+
+    <button
+      id="recordBackButton"
+      class="category-back"
+      type="button"
+    >
+      ‹
+    </button>
+
+    <h1>Add Record</h1>
+
+  </div>
+
+  <div class="category-body">
+
+    <div class="category-intro">
+
+      <h2 id="recordCategoryTitle">
+        Bank Details
+      </h2>
+
+      <p>
+        Add information you want to keep organized.
+      </p>
+
+    </div>
+
+    <form id="recordForm">
+
+      <!-- Category-specific fields are inserted here by JavaScript -->
+
+    </form>
+
+  </div>
+
+</section>
+
+
+
+   
+  <script type="module" src="script.js"></script>
+  </body>
+</html>
