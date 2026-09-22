@@ -143,7 +143,95 @@
 
 </div>
 
-  </section>  <!-- DASHBOARD -->  <section id="dashboardScreen" class="screen"><div class="dashboard-container">
+  </section> 
+
+  <!-- MASTER PASSWORD -->
+<section id="masterPasswordScreen" class="screen">
+
+  <div class="auth-container">
+
+    <div class="auth-logo">BV</div>
+
+    <h2 id="masterPasswordTitle">
+      Create your Master Password
+    </h2>
+
+    <p id="masterPasswordDescription">
+      Your Master Password will be required whenever you want to access Bank Vault.
+    </p>
+
+    <form id="masterPasswordForm" novalidate>
+
+      <div class="input-group">
+
+        <label for="masterPasswordInput">
+          Master Password
+        </label>
+
+        <input
+          id="masterPasswordInput"
+          type="password"
+          placeholder="Enter your master password"
+          autocomplete="new-password"
+          required
+        >
+
+      </div>
+
+      <div
+        id="confirmMasterPasswordGroup"
+        class="input-group"
+      >
+
+        <label for="confirmMasterPasswordInput">
+          Confirm Master Password
+        </label>
+
+        <input
+          id="confirmMasterPasswordInput"
+          type="password"
+          placeholder="Confirm your master password"
+          autocomplete="new-password"
+          required
+        >
+
+      </div>
+
+      <p
+        id="masterPasswordError"
+        class="form-error"
+        style="display:none;"
+      ></p>
+
+      <button
+        id="masterPasswordSubmit"
+        class="primary-button auth-submit"
+        type="submit"
+      >
+        Create Master Password
+      </button>
+
+    </form>
+
+    <div class="master-password-warning">
+
+  <div class="master-password-warning-title">
+    Master Password Reminder
+  </div>
+
+  <div class="master-password-warning-text">
+    Please store your Master Password securely and make sure you remember it.
+    For your protection, it cannot be reset if forgotten.
+  </div>
+
+    </div>
+
+  </div>
+
+</section>
+  <!-- DASHBOARD -->  <section id="dashboardScreen" class="screen">
+ 
+    <div class="dashboard-container">
 
   <div class="topbar">
 
@@ -255,13 +343,7 @@
 
   <span>Enable Notifications</span>
 </button>
-    <button
-  type="button"
-  class="notification-button"
-  onclick="window.sendBankVaultTestNotification()"
->
-  <span>Send Test Notification</span>
-    </button>
+    
 
 
   <div class="category-grid">
@@ -481,7 +563,7 @@
   </div>
 
 </section>
- <!-- SETTINGS -->
+<!-- SETTINGS -->
 <section id="settingsScreen" class="screen">
 
   <div class="category-header">
@@ -510,13 +592,97 @@
 
     </div>
 
+    
+
+  </div>
+
+  <div class="settings-actions">
+
+      <button
+        id="profileButton"
+        class="menu-button"
+        type="button"
+      >
+        Profile
+      </button>
+
+      <button
+        id="logoutButton"
+        class="menu-button"
+        type="button"
+      >
+        Logout
+      </button>
+
+  </div>
+
+</section>
+  <!-- PROFILE -->
+<section id="profileScreen" class="screen">
+
+  <div class="category-header">
+
     <button
-      id="logoutButton"
-      class="menu-button"
+      id="profileBackButton"
+      class="category-back"
       type="button"
     >
-      Logout
+      ‹
     </button>
+
+    <h1>Profile</h1>
+
+  </div>
+
+  <div class="category-body">
+
+    <div class="category-intro">
+
+      <h2>Your Account</h2>
+
+      <p>
+        View and manage your Bank Vault account.
+      </p>
+
+    </div>
+
+    <div class="profile-card">
+
+      <div class="profile-avatar">
+        BV
+      </div>
+
+      <div class="profile-info">
+
+        <strong id="profileName">
+          Account
+        </strong>
+
+        <span id="profileEmail">
+          Loading...
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="profile-details">
+
+      <div class="profile-detail">
+        <span>Account status</span>
+        <strong>Active</strong>
+      </div>
+
+      <div class="profile-detail">
+        <span>Authentication</span>
+        <strong>Supabase</strong>
+      </div>
+      <div class="profile-detail">
+  <span>User ID</span>
+  <strong id="profileUserId">Loading...</strong>
+      </div>
+
+    </div>
 
   </div>
 
@@ -638,7 +804,7 @@
       </h2>
 
       <p>
-        Add information you want to keep organized.
+        Add your banking information you want to keep organized.
       </p>
 
     </div>

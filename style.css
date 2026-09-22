@@ -961,3 +961,495 @@ min-height: 155px;
 .notification-button:hover {
   background: rgba(25, 65, 43, 0.9);
 }
+
+/* =========================
+INITIAL SCREEN PROTECTION
+========================= */
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* Keep every app screen hidden until JavaScript
+   deliberately activates it. */
+.screen {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Welcome is the only screen allowed to appear
+   before JavaScript decides where the user belongs. */
+#welcomeScreen {
+  display: flex;
+}
+
+.settings-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#logoutButton {
+  background: #7f1d1d;
+  color: #fff;
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  order: 999;
+}
+
+#logoutButton:active {
+  background: #991b1b;
+  transform: scale(0.97);
+}
+
+.settings-actions {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.settings-actions .menu-button {
+  width: 100%;
+  min-height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #132a20,
+      #0b1712
+    );
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  color: #f4f7f5;
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: .2px;
+
+  box-shadow:
+    0 14px 35px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.05);
+
+  transition:
+    transform .25s cubic-bezier(.16,1,.3,1),
+    box-shadow .25s ease,
+    border-color .25s ease;
+}
+
+.settings-actions .menu-button:active {
+  transform: scale(.975);
+}
+
+/* Logout stays at the bottom */
+#logoutButton {
+  order: 999;
+
+  background:
+    linear-gradient(
+      135deg,
+      #8f2525,
+      #551616
+    );
+
+  border-color: rgba(255,110,110,.22);
+
+  box-shadow:
+    0 14px 35px rgba(80,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+#logoutButton:active {
+  background:
+    linear-gradient(
+      135deg,
+      #a52b2b,
+      #641919
+    );
+}
+.settings-actions .menu-button {
+  min-height: 48px;
+  height: 48px;
+  border-radius: 16px;
+}
+.settings-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* Normal settings buttons */
+.settings-actions .menu-button:not(#logoutButton) {
+  width: auto;
+  min-height: auto;
+  height: auto;
+
+  padding: 7px 2px;
+
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
+  color: #dce4df;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Logout stays large and cinematic */
+#logoutButton {
+  width: 100%;
+  min-height: 48px;
+  height: 48px;
+
+  margin-top: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    #8f2525,
+    #551616
+  );
+
+  border: 1px solid rgba(255,110,110,.22);
+
+  color: white;
+  text-align: center;
+
+  box-shadow:
+    0 14px 35px rgba(80,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.06);
+}
+/* =========================
+MODERN PROFILE SCREEN
+========================= */
+
+#profileScreen .category-body {
+  padding-top: 20px;
+}
+
+/* Profile hero card */
+.profile-card {
+  width: 100%;
+  max-width: 560px;
+  margin: 24px auto 18px;
+
+  padding: 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(25, 55, 42, .95),
+      rgba(8, 20, 14, .98)
+    );
+
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px;
+
+  box-shadow:
+    0 20px 45px rgba(0,0,0,.30),
+    inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+/* BV avatar */
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1f9d63,
+      #0c5034
+    );
+
+  color: #ffffff;
+
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.25),
+    inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+/* Name + email */
+.profile-info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-info strong {
+  color: #f4f7f5;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-info span {
+  color: #9eaaa3;
+
+  font-size: 13px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Account details */
+.profile-details {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  background: rgba(12, 25, 18, .75);
+
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+.profile-detail {
+  min-height: 62px;
+
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.profile-detail:last-child {
+  border-bottom: none;
+}
+
+.profile-detail span {
+  color: #9eaaa3;
+  font-size: 14px;
+}
+
+.profile-detail strong {
+  color: #e8eee9;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+/* Small-screen adjustment */
+@media (max-width: 480px) {
+
+  .profile-card {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .profile-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+  }
+
+  .profile-info strong {
+    font-size: 16px;
+  }
+
+}
+
+body {
+  font-weight: 500;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+label {
+  font-weight: 800;
+}
+.master-password-warning {
+  margin-top: 24px;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 190, 70, 0.28);
+  border-radius: 16px;
+  background: rgba(255, 190, 70, 0.06);
+  text-align: left;
+}
+
+.master-password-warning-title {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.master-password-warning-text {
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.78;
+}
+.record-card {
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #0b1712;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-sizing: border-box;
+  color: #ffffff;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.22);
+}
+
+.record-card-header {
+  padding: 20px 20px 18px;
+  background: linear-gradient(
+    135deg,
+    rgba(32, 78, 57, 0.42),
+    rgba(11, 23, 18, 0.95)
+  );
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.record-card-title {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+}
+
+.record-card-category {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(115, 190, 145, 0.12);
+  border: 1px solid rgba(115, 190, 145, 0.14);
+  color: #9fc8ad;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.record-card-details {
+  padding: 20px;
+  color: #dce5e0;
+}
+
+.record-card-details > div {
+  margin-bottom: 18px !important;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.045);
+}
+
+.record-card-details > div:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.record-card-details div div {
+  font-weight: 500;
+}
+
+.record-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: rgba(0,0,0,0.14);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  color: #718078;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.record-card-footer span:first-child {
+  font-weight: 600;
+  color: #87978f;
+}
+
+.record-card-footer span:last-child {
+  text-align: right;
+  opacity: 0.8;
+}
+.record-edit-button {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  color: #a9bdb3;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.record-edit-button:active {
+  transform: scale(0.94);
+  background: rgba(255,255,255,0.08);
+}
+
+.record-edit-button svg {
+  display: block;
+}
+.record-card-header {
+  position: relative;
+}

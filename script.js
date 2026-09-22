@@ -1,5 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+
+
 /* =========================
 SUPABASE
 ========================= */
@@ -29,6 +31,33 @@ const authScreen =
 const dashboardScreen =
   document.getElementById("dashboardScreen");
 
+const masterPasswordScreen =
+  document.getElementById("masterPasswordScreen");
+
+const masterPasswordForm =
+  document.getElementById("masterPasswordForm");
+
+const masterPasswordInput =
+  document.getElementById("masterPasswordInput");
+
+const confirmMasterPasswordInput =
+  document.getElementById("confirmMasterPasswordInput");
+
+const confirmMasterPasswordGroup =
+  document.getElementById("confirmMasterPasswordGroup");
+
+const masterPasswordTitle =
+  document.getElementById("masterPasswordTitle");
+
+const masterPasswordDescription =
+  document.getElementById("masterPasswordDescription");
+
+const masterPasswordSubmit =
+  document.getElementById("masterPasswordSubmit");
+
+const masterPasswordError =
+  document.getElementById("masterPasswordError");
+
 const categoryScreen =
   document.getElementById("categoryScreen");
 
@@ -48,6 +77,77 @@ const adminBackButton =
 
 const settingsBackButton =
   document.getElementById("settingsBackButton");
+
+const profileButton =
+  document.getElementById("profileButton");
+
+const profileScreen =
+  document.getElementById("profileScreen");
+
+const profileBackButton =
+  document.getElementById("profileBackButton");
+
+if (profileButton) {
+  profileButton.addEventListener("click", async () => {
+
+    document.querySelectorAll(".screen")
+      .forEach(screen => {
+        screen.style.display = "none";
+      });
+
+    profileScreen.style.display = "block";
+
+    await loadProfileData();
+  });
+}
+
+if (profileBackButton) {
+  profileBackButton.addEventListener("click", () => {
+
+    profileScreen.style.display = "none";
+
+    const settingsScreen =
+      document.getElementById("settingsScreen");
+
+    settingsScreen.style.display = "block";
+  });
+}
+async function loadProfileData() {
+  const {
+    data: {
+      user
+    },
+    error
+  } = await supabase.auth.getUser();
+
+  if (error || !user) {
+    return;
+  }
+
+  const profileName =
+    document.getElementById("profileName");
+
+  const profileEmail =
+    document.getElementById("profileEmail");
+
+  if (profileName) {
+    profileName.textContent =
+      user.user_metadata?.name ||
+      "Bank Vault User";
+  }
+
+  if (profileEmail) {
+    profileEmail.textContent =
+      user.email || "No email available";
+  }
+  const profileUserId =
+  document.getElementById("profileUserId");
+
+if (profileUserId) {
+  profileUserId.textContent =
+    user.id || "Unavailable";
+}
+}
 
 const logoutButton =
   document.getElementById("logoutButton");
@@ -157,16 +257,9 @@ const menuButton =
   }
 );
 
-adminBackButton.addEventListener(
-  "click",
-  () => {
-
-    showScreen(
-      dashboardScreen
-    );
-
-  }
-);
+adminBackButton.addEventListener("click", () => {
+  showScreen(dashboardScreen);
+});
 
 /* =========================
 STATE
@@ -180,29 +273,379 @@ let selectedCategory =
 let userRecords = [];
 const ADMIN_USER_ID = "cbeab3b8-b717-4020-8b9a-7e26596ca946";
 
+/* =========================
+MASTER PASSWORD
+========================= */
+
+let masterPasswordMode = "setup";
+
+function getMasterPasswordKey(userId) {
+  return `bankVaultMasterPassword_${userId}`;
+}
+
+
+async function hashMasterPassword(password) {
+
+  const encoder =
+    new TextEncoder();
+
+  const data =
+    encoder.encode(password);
+
+  const hashBuffer =
+    await crypto.subtle.digest(
+      "SHA-256",
+      data
+    );
+
+  const hashArray =
+    Array.from(
+      new Uint8Array(hashBuffer)
+    );
+
+  return hashArray
+    .map(
+      byte =>
+        byte.toString(16).padStart(2, "0")
+    )
+    .join("");
+}
+
+
+async function hasMasterPassword(userId) {
+
+  if (!userId) {
+    return false;
+  }
+
+  const key =
+    getMasterPasswordKey(userId);
+
+  return Boolean(
+    localStorage.getItem(key)
+  );
+
+}
+
+
+function showMasterPasswordSetup() {
+
+  masterPasswordMode =
+    "setup";
+
+  masterPasswordTitle.textContent =
+    "Create your Master Password";
+
+  masterPasswordDescription.textContent =
+    "Your Master Password will be required whenever you want to access Bank Vault.";
+
+  masterPasswordInput.value =
+    "";
+
+  confirmMasterPasswordInput.value =
+    "";
+
+  confirmMasterPasswordGroup.style.display =
+    "block";
+  confirmMasterPasswordInput.required = false;
+
+  masterPasswordSubmit.textContent =
+    "Create Master Password";
+
+  masterPasswordError.style.display =
+    "none";
+
+  showScreen(
+    masterPasswordScreen
+  );
+
+  setTimeout(() => {
+    masterPasswordInput.focus();
+  }, 100);
+
+}
+
+
+function showMasterPasswordUnlock() {
+
+  masterPasswordMode =
+    "unlock";
+
+  masterPasswordTitle.textContent =
+    "Enter your Master Password";
+
+  masterPasswordDescription.textContent =
+    "Enter your Master Password to access Bank Vault.";
+
+  masterPasswordInput.value =
+    "";
+
+  confirmMasterPasswordInput.value =
+    "";
+
+  confirmMasterPasswordGroup.style.display =
+    "none";
+
+  masterPasswordSubmit.textContent =
+    "Unlock Bank Vault";
+
+  masterPasswordError.style.display =
+    "none";
+
+  showScreen(
+    masterPasswordScreen
+  );
+
+  setTimeout(() => {
+    masterPasswordInput.focus();
+  }, 100);
+
+}
+
+
+function showMasterPasswordError(message) {
+
+  masterPasswordError.textContent =
+    message;
+
+  masterPasswordError.style.display =
+    "block";
+}
+
+
+masterPasswordForm.addEventListener(
+  "submit",
+  async event => {
+    
+
+    event.preventDefault();
+
+try {
+
+      const password =
+        masterPasswordInput.value;
+
+      if (!password) {
+
+        showMasterPasswordError(
+          "Please enter your Master Password."
+        );
+
+        return;
+      }
+
+
+      const {
+        data: {
+          user
+        },
+        error: userError
+      } =
+        await supabase.auth.getUser();
+
+
+      if (userError || !user) {
+
+        showMasterPasswordError(
+          "Your session has expired. Please log in again."
+        );
+
+        return;
+      }
+
+
+      /* =========================
+      SETUP
+      ========================= */
+
+      if (
+        masterPasswordMode ===
+        "setup"
+      ) {
+
+        const confirmation =
+          confirmMasterPasswordInput.value;
+
+
+        if (password.length < 8) {
+
+          showMasterPasswordError(
+            "Your Master Password must be at least 8 characters."
+          );
+
+          return;
+        }
+
+
+        if (password !== confirmation) {
+
+          showMasterPasswordError(
+            "The passwords do not match."
+          );
+
+          return;
+        }
+
+
+        const hash =
+          await hashMasterPassword(
+            password
+          );
+
+
+        localStorage.setItem(
+          getMasterPasswordKey(user.id),
+          hash
+        );
+
+
+        masterPasswordInput.value =
+          "";
+
+        confirmMasterPasswordInput.value =
+          "";
+
+
+        await openDashboardAfterMasterPassword();
+
+        return;
+      }
+
+
+      /* =========================
+      UNLOCK
+      ========================= */
+
+      const savedHash =
+        localStorage.getItem(
+          getMasterPasswordKey(user.id)
+        );
+
+
+      if (!savedHash) {
+
+        showMasterPasswordSetup();
+
+        return;
+      }
+
+
+      const enteredHash =
+        await hashMasterPassword(
+          password
+        );
+
+
+      if (
+        enteredHash !==
+        savedHash
+      ) {
+
+        showMasterPasswordError(
+          "Incorrect Master Password."
+        );
+
+        masterPasswordInput.value =
+          "";
+
+        masterPasswordInput.focus();
+
+        return;
+      }
+
+
+      masterPasswordInput.value =
+        "";
+
+      showMasterPasswordError("");
+
+      await openDashboardAfterMasterPassword();
+
+    } catch (error) {
+
+      console.error(
+        "Master Password error:",
+        error
+      );
+
+      showMasterPasswordError(
+        error.message ||
+        "Unable to unlock Bank Vault."
+      );
+
+    }
+
+  }
+);
+
+
+async function open() {
+  const {
+    data: { user },
+    error
+  } = await supabase.auth.getUser();
+
+  if (error || !user) {
+    showScreen(authScreen);
+    return;
+  }
+
+  const passwordExists =
+    await hasMasterPassword(user.id);
+
+  if (passwordExists) {
+    showMasterPasswordUnlock();
+  } else {
+    showMasterPasswordSetup();
+  }
+}
+
+async function openDashboardAfterMasterPassword() {
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    showScreen(authScreen);
+    return;
+  }
+
+  if (user.id === ADMIN_USER_ID) {
+    adminButton.style.display = "block";
+  } else {
+    adminButton.style.display = "none";
+  }
+
+  showScreen(dashboardScreen);
+  await loadRecords();
+}
+
 
 /* =========================
 SCREEN CONTROL
 ========================= */
 
 function hideAllScreens() {
-
   welcomeScreen.style.display = "none";
   authScreen.style.display = "none";
+  masterPasswordScreen.style.display = "none";
   dashboardScreen.style.display = "none";
   categoryScreen.style.display = "none";
   searchScreen.style.display = "none";
   recordScreen.style.display = "none";
   adminScreen.style.display = "none";
-settingsScreen.style.display = "none";
+  settingsScreen.style.display = "none";
 }
 
 function showScreen(screen) {
-
   hideAllScreens();
 
-  screen.style.display = "block";
+  if (!screen) {
+    console.error("Screen not found");
+    return;
+  }
 
+  screen.style.display = "block";
 }
 
 
@@ -210,14 +653,10 @@ function showScreen(screen) {
 WELCOME
 ========================= */
 
-getStartedButton.addEventListener(
-  "click",
-  () => {
-
-    showScreen(authScreen);
-
-  }
-);
+getStartedButton.addEventListener("click", () => {
+  hideAllScreens();
+  authScreen.style.display = "block";
+});
 
 
 backButton.addEventListener(
@@ -346,7 +785,28 @@ authForm.addEventListener(
 
         if (data.session) {
 
-          await openDashboard();
+          const {
+  data: {
+    user
+  }
+} = await supabase.auth.getUser();
+
+if (user) {
+
+  const passwordExists =
+    await hasMasterPassword(user.id);
+
+  if (passwordExists) {
+
+    showMasterPasswordUnlock();
+
+  } else {
+
+    showMasterPasswordSetup();
+
+  }
+
+}
 
         } else {
 
@@ -376,7 +836,7 @@ authForm.addEventListener(
           throw error;
         }
 
-        await openDashboard();
+        await open();
 
       }
 
@@ -406,27 +866,7 @@ authForm.addEventListener(
 DASHBOARD
 ========================= */
 
-async function openDashboard() {
-  
-  const {
-  data: {
-    user
-  }
-} = await supabase.auth.getUser();
 
-if (user && user.id === ADMIN_USER_ID) {
-  adminButton.style.display = "block";
-} else {
-  adminButton.style.display = "none";
-}
-
-  showScreen(
-    dashboardScreen
-  );
-
-  await loadRecords();
-
-}
 
 
 /* =========================
@@ -473,7 +913,7 @@ async function loadRecords() {
   userRecords =
     data || [];
 
-  updateDashboardCounts();
+  updateCounts();
 
 }
 
@@ -619,10 +1059,10 @@ async function loadAdminRecords() {
 
 
 /* =========================
-DASHBOARD COUNTS
+ COUNTS
 ========================= */
 
-function updateDashboardCounts() {
+function updateCounts() {
 
   totalRecords.textContent =
     userRecords.length;
@@ -785,53 +1225,74 @@ function renderCategoryRecords() {
 
         html += `
 
-          <div
-            class="record-card"
-            style="
-              width:100%;
-              margin-bottom:14px;
-              padding:20px;
-              border-radius:26px;
-              background:#0d1a15;
-              border:1px solid rgba(255,255,255,.06);
-              color:white;
-              box-sizing:border-box;
-            "
-          >
+          <div class="record-card">
 
-            <h3
-              style="
-                margin:0 0 16px;
-                font-size:18px;
-              "
-            >
-              ${escapeHtml(
-                record.title || "Record"
-              )}
-            </h3>
+  <div class="record-card-header">
 
-            <div>
+  <button
+    class="record-edit-button"
+    type="button"
+    aria-label="Edit record"
+  >
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4 20H8L19 9L15 5L4 16V20Z"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M13.5 6.5L17.5 10.5"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
 
-              ${details}
+  <div class="record-card-title">
+      ${escapeHtml(
+        record.title || "Record"
+      )}
+    </div>
 
-            </div>
+    <div class="record-card-category">
+      ${escapeHtml(
+        record.category || "Record"
+      )}
+    </div>
 
-            <div
-              style="
-                margin-top:16px;
-                color:#718078;
-                font-size:12px;
-              "
-            >
-              Saved:
-              ${
-                record.created_at
-                  ? new Date(
-                      record.created_at
-                    ).toLocaleString()
-                  : "—"
-              }
-            </div>
+  </div>
+
+  <div class="record-card-details">
+    ${details}
+  </div>
+
+  <div class="record-card-footer">
+
+    <span>Saved</span>
+
+    <span>
+      ${
+        record.created_at
+          ? new Date(
+              record.created_at
+            ).toLocaleString()
+          : "—"
+      }
+    </span>
+
+  </div>
+
+</div>
 
           </div>
 
@@ -1246,13 +1707,13 @@ function openAddRecord() {
       <div class="input-group">
 
         <label>
-          Public Address / Identifier
+          Secret phrase/Private key
         </label>
 
         <input
           id="recordCryptoAddress"
           type="text"
-          placeholder="Public address only"
+          placeholder="Your secret phrase"
         >
 
       </div>
@@ -1261,13 +1722,13 @@ function openAddRecord() {
       <div class="input-group">
 
         <label>
-          Asset Type
+          Wallet password
         </label>
 
         <input
           id="recordCryptoAssetType"
           type="text"
-          placeholder="e.g. Coin or Token"
+          placeholder="e.g. Your wallet pssword"
         >
 
       </div>
@@ -1410,16 +1871,9 @@ function openAddRecord() {
 CATEGORY BACK
 ========================= */
 
-categoryBackButton.addEventListener(
-  "click",
-  () => {
-
-    showScreen(
-      dashboardScreen
-    );
-
-  }
-);
+categoryBackButton.addEventListener("click", () => {
+  showScreen(dashboardScreen);
+});
 
 
 /* =========================
@@ -1763,7 +2217,7 @@ recordForm.addEventListener(
       if (cryptoNetwork) {
 
         contentParts.push(
-          `Network: ${cryptoNetwork}`
+          `Cryptocurrency network: ${cryptoNetwork}`
         );
 
       }
@@ -1772,7 +2226,7 @@ recordForm.addEventListener(
       if (cryptoAddress) {
 
         contentParts.push(
-          `Public Address / Identifier: ${cryptoAddress}`
+          `Secret phrase/Public key: ${cryptoAddress}`
         );
 
       }
@@ -1781,7 +2235,7 @@ recordForm.addEventListener(
       if (cryptoAssetType) {
 
         contentParts.push(
-          `Asset Type: ${cryptoAssetType}`
+          `Wallet password: ${cryptoAssetType}`
         );
 
       }
@@ -2011,16 +2465,9 @@ searchNavButton.addEventListener(
 );
 
 
-searchBackButton.addEventListener(
-  "click",
-  () => {
-
-    showScreen(
-      dashboardScreen
-    );
-
-  }
-);
+searchBackButton.addEventListener("click", () => {
+  showScreen(dashboardScreen);
+});
 
 
 searchInput.addEventListener(
@@ -2145,16 +2592,9 @@ searchInput.addEventListener(
 HOME
 ========================= */
 
-homeNavButton.addEventListener(
-  "click",
-  () => {
-
-    showScreen(
-      dashboardScreen
-    );
-
-  }
-);
+homeNavButton.addEventListener("click", () => {
+  showScreen(dashboardScreen);
+});
 
 
 /* =========================
@@ -2172,16 +2612,9 @@ settingsNavButton.addEventListener(
   }
 );
 
-settingsBackButton.addEventListener(
-  "click",
-  () => {
-
-    showScreen(
-      dashboardScreen
-    );
-
-  }
-);
+settingsBackButton.addEventListener("click", () => {
+  showScreen(dashboardScreen);
+});
 
  logoutButton.addEventListener(
   "click",
@@ -2268,27 +2701,32 @@ EXISTING SESSION
 ========================= */
 
 async function checkExistingSession() {
+  try {
+    const {
+      data: {
+        session
+      },
+      error
+    } = await supabase.auth.getSession();
 
-  const {
-    data: {
-      session
+    if (error) {
+      throw error;
     }
-  } =
-    await supabase.auth.getSession();
 
+    if (session) {
+      await open();
+    } else {
+      showScreen(welcomeScreen);
+    }
 
-  if (session) {
+  } catch (error) {
+    console.error("Bank Vault startup error:", error);
 
-    await openDashboard();
-
-  } else {
-
-    showScreen(
-      welcomeScreen
+    alert(
+      "Bank Vault startup error: " +
+      (error.message || "Unknown error")
     );
-
   }
-
 }
 
 
@@ -2506,9 +2944,7 @@ window.sendBankVaultTestNotification = async function () {
       data
     );
 
-    alert(
-      "Notification sent successfully."
-    );
+    
 
   } catch (error) {
     console.error(
@@ -2518,6 +2954,26 @@ window.sendBankVaultTestNotification = async function () {
 
     alert(
       "Unable to send the notification."
-    );
+      );
+      
+    
   }
 };
+/* =========================
+AUTO TEST NOTIFICATION
+========================= */
+
+setTimeout(async () => {
+
+  const {
+    data: {
+      session
+    }
+  } = await supabase.auth.getSession();
+  if (!session) {
+    return;
+  }
+
+  await window.sendBankVaultTestNotification();
+
+}, 5000);
