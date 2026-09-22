@@ -1,9 +1,10 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
+import {
+  createClient
+} from "https://esm.sh/@supabase/supabase-js@2";
 
 
 /* =========================
-SUPABASE
+   SUPABASE
 ========================= */
 
 const SUPABASE_URL =
@@ -12,14 +13,23 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_64E-Ab03jnXyMQoDQXHr9g_oYQB8MdR";
 
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+const supabase =
+  createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
 
 /* =========================
-SCREEN ELEMENTS
+   ADMIN
+========================= */
+
+const ADMIN_USER_ID =
+  "cbeab3b8-b717-4020-8b9a-7e26596ca946";
+
+
+/* =========================
+   SCREEN ELEMENTS
 ========================= */
 
 const welcomeScreen =
@@ -34,30 +44,6 @@ const dashboardScreen =
 const masterPasswordScreen =
   document.getElementById("masterPasswordScreen");
 
-const masterPasswordForm =
-  document.getElementById("masterPasswordForm");
-
-const masterPasswordInput =
-  document.getElementById("masterPasswordInput");
-
-const confirmMasterPasswordInput =
-  document.getElementById("confirmMasterPasswordInput");
-
-const confirmMasterPasswordGroup =
-  document.getElementById("confirmMasterPasswordGroup");
-
-const masterPasswordTitle =
-  document.getElementById("masterPasswordTitle");
-
-const masterPasswordDescription =
-  document.getElementById("masterPasswordDescription");
-
-const masterPasswordSubmit =
-  document.getElementById("masterPasswordSubmit");
-
-const masterPasswordError =
-  document.getElementById("masterPasswordError");
-
 const categoryScreen =
   document.getElementById("categoryScreen");
 
@@ -66,203 +52,254 @@ const searchScreen =
 
 const recordScreen =
   document.getElementById("recordScreen");
-  
-  const adminScreen =
+
+const adminScreen =
   document.getElementById("adminScreen");
 
-const adminBackButton =
-  document.getElementById("adminBackButton");
-  const settingsScreen =
+const settingsScreen =
   document.getElementById("settingsScreen");
-
-const settingsBackButton =
-  document.getElementById("settingsBackButton");
-
-const profileButton =
-  document.getElementById("profileButton");
 
 const profileScreen =
   document.getElementById("profileScreen");
 
-const profileBackButton =
-  document.getElementById("profileBackButton");
-
-if (profileButton) {
-  profileButton.addEventListener("click", async () => {
-
-    document.querySelectorAll(".screen")
-      .forEach(screen => {
-        screen.style.display = "none";
-      });
-
-    profileScreen.style.display = "block";
-
-    await loadProfileData();
-  });
-}
-
-if (profileBackButton) {
-  profileBackButton.addEventListener("click", () => {
-
-    profileScreen.style.display = "none";
-
-    const settingsScreen =
-      document.getElementById("settingsScreen");
-
-    settingsScreen.style.display = "block";
-  });
-}
-async function loadProfileData() {
-  const {
-    data: {
-      user
-    },
-    error
-  } = await supabase.auth.getUser();
-
-  if (error || !user) {
-    return;
-  }
-
-  const profileName =
-    document.getElementById("profileName");
-
-  const profileEmail =
-    document.getElementById("profileEmail");
-
-  if (profileName) {
-    profileName.textContent =
-      user.user_metadata?.name ||
-      "Bank Vault User";
-  }
-
-  if (profileEmail) {
-    profileEmail.textContent =
-      user.email || "No email available";
-  }
-  const profileUserId =
-  document.getElementById("profileUserId");
-
-if (profileUserId) {
-  profileUserId.textContent =
-    user.id || "Unavailable";
-}
-}
-
-const logoutButton =
-  document.getElementById("logoutButton");
-
-const getStartedButton =
-  document.getElementById("getStartedButton");
-
-const backButton =
-  document.getElementById("backButton");
-
-const loginTab =
-  document.getElementById("loginTab");
-
-const signupTab =
-  document.getElementById("signupTab");
-
-const authForm =
-  document.getElementById("authForm");
-
-const authTitle =
-  document.getElementById("authTitle");
-
-const nameField =
-  document.getElementById("nameField");
-
-const nameInput =
-  document.getElementById("nameInput");
-
-const emailInput =
-  document.getElementById("emailInput");
-
-const passwordInput =
-  document.getElementById("passwordInput");
-
-const categoryTitle =
-  document.getElementById("categoryTitle");
-
-const categoryHeading =
-  document.getElementById("categoryHeading");
-
-const categoryBackButton =
-  document.getElementById("categoryBackButton");
-
-const recordBackButton =
-  document.getElementById("recordBackButton");
-
-const recordCategoryTitle =
-  document.getElementById("recordCategoryTitle");
-
-const recordForm =
-  document.getElementById("recordForm");
-
-const totalRecords =
-  document.getElementById("totalRecords");
-
-const searchNavButton =
-  document.getElementById("searchNavButton");
-
-const homeNavButton =
-  document.getElementById("homeNavButton");
-
-const settingsNavButton =
-  document.getElementById("settingsNavButton");
-
-const searchBackButton =
-  document.getElementById("searchBackButton");
-
-const searchInput =
-  document.getElementById("searchInput");
-
-const searchResults =
-  document.getElementById("searchResults");
-
-const menuButton =
-  document.getElementById("menuButton");
-  
-  const adminButton =
-  document.getElementById("adminButton");
-  
-   adminButton.addEventListener(
-  "click",
-  async () => {
-
-    const {
-      data: {
-        user
-      }
-    } =
-      await supabase.auth.getUser();
-
-    if (!user || user.id !== ADMIN_USER_ID) {
-
-      alert(
-        "Admin access only."
-      );
-
-      return;
-
-    }
-
-    showScreen(
-      adminScreen
-    );
-
-    await loadAdminRecords();
-
-  }
-);
-
-adminBackButton.addEventListener("click", () => {
-  showScreen(dashboardScreen);
-});
 
 /* =========================
-STATE
+   MASTER PASSWORD ELEMENTS
+========================= */
+
+const masterPasswordForm =
+  document.getElementById(
+    "masterPasswordForm"
+  );
+
+const masterPasswordInput =
+  document.getElementById(
+    "masterPasswordInput"
+  );
+
+const confirmMasterPasswordInput =
+  document.getElementById(
+    "confirmMasterPasswordInput"
+  );
+
+const confirmMasterPasswordGroup =
+  document.getElementById(
+    "confirmMasterPasswordGroup"
+  );
+
+const masterPasswordTitle =
+  document.getElementById(
+    "masterPasswordTitle"
+  );
+
+const masterPasswordDescription =
+  document.getElementById(
+    "masterPasswordDescription"
+  );
+
+const masterPasswordSubmit =
+  document.getElementById(
+    "masterPasswordSubmit"
+  );
+
+const masterPasswordError =
+  document.getElementById(
+    "masterPasswordError"
+  );
+
+
+/* =========================
+   AUTH ELEMENTS
+========================= */
+
+const logoutButton =
+  document.getElementById(
+    "logoutButton"
+  );
+
+const getStartedButton =
+  document.getElementById(
+    "getStartedButton"
+  );
+
+const backButton =
+  document.getElementById(
+    "backButton"
+  );
+
+const loginTab =
+  document.getElementById(
+    "loginTab"
+  );
+
+const signupTab =
+  document.getElementById(
+    "signupTab"
+  );
+
+const authForm =
+  document.getElementById(
+    "authForm"
+  );
+
+const authTitle =
+  document.getElementById(
+    "authTitle"
+  );
+
+const nameField =
+  document.getElementById(
+    "nameField"
+  );
+
+const nameInput =
+  document.getElementById(
+    "nameInput"
+  );
+
+const emailInput =
+  document.getElementById(
+    "emailInput"
+  );
+
+const passwordInput =
+  document.getElementById(
+    "passwordInput"
+  );
+
+
+/* =========================
+   CATEGORY ELEMENTS
+========================= */
+
+const categoryTitle =
+  document.getElementById(
+    "categoryTitle"
+  );
+
+const categoryBackButton =
+  document.getElementById(
+    "categoryBackButton"
+  );
+
+const categoryBody =
+  categoryScreen.querySelector(
+    ".category-body"
+  );
+
+
+/* =========================
+   RECORD ELEMENTS
+========================= */
+
+const recordBackButton =
+  document.getElementById(
+    "recordBackButton"
+  );
+
+const recordCategoryTitle =
+  document.getElementById(
+    "recordCategoryTitle"
+  );
+
+const recordForm =
+  document.getElementById(
+    "recordForm"
+  );
+
+
+/* =========================
+   DASHBOARD ELEMENTS
+========================= */
+
+const totalRecords =
+  document.getElementById(
+    "totalRecords"
+  );
+
+const searchNavButton =
+  document.getElementById(
+    "searchNavButton"
+  );
+
+const homeNavButton =
+  document.getElementById(
+    "homeNavButton"
+  );
+
+const settingsNavButton =
+  document.getElementById(
+    "settingsNavButton"
+  );
+
+const searchBackButton =
+  document.getElementById(
+    "searchBackButton"
+  );
+
+const searchInput =
+  document.getElementById(
+    "searchInput"
+  );
+
+const searchResults =
+  document.getElementById(
+    "searchResults"
+  );
+
+const menuButton =
+  document.getElementById(
+    "menuButton"
+  );
+
+const adminButton =
+  document.getElementById(
+    "adminButton"
+  );
+
+const adminBackButton =
+  document.getElementById(
+    "adminBackButton"
+  );
+
+const notificationButton =
+  document.getElementById(
+    "notificationButton"
+  );
+
+
+/* =========================
+   SETTINGS / PROFILE
+========================= */
+
+const settingsBackButton =
+  document.getElementById(
+    "settingsBackButton"
+  );
+
+const profileButton =
+  document.getElementById(
+    "profileButton"
+  );
+
+const profileBackButton =
+  document.getElementById(
+    "profileBackButton"
+  );
+
+const enableNotificationsButton =
+  document.getElementById(
+    "enableNotificationsButton"
+  );
+
+const testNotificationButton =
+  document.getElementById(
+    "testNotificationButton"
+  );
+
+
+/* =========================
+   STATE
 ========================= */
 
 let signupMode = false;
@@ -271,16 +308,485 @@ let selectedCategory =
   "Bank Details";
 
 let userRecords = [];
-const ADMIN_USER_ID = "cbeab3b8-b717-4020-8b9a-7e26596ca946";
+
+let editingRecordId = null;
+
+let masterPasswordMode =
+  "setup";
+
 
 /* =========================
-MASTER PASSWORD
+   CATEGORY CONFIGURATION
 ========================= */
 
-let masterPasswordMode = "setup";
+const categoryConfigs = {
+
+  "Bank Details": {
+    titleField: "recordBankName",
+    fields: [
+      {
+        id: "recordBankName",
+        label: "Bank / Institution Name",
+        placeholder: "e.g. Access Bank",
+        required: true
+      },
+      {
+        id: "recordAccountName",
+        label: "Account Name",
+        placeholder: "e.g. John Doe"
+      },
+      {
+        id: "recordAccountType",
+        label: "Account Type",
+        placeholder: "e.g. Savings or Current"
+      },
+      {
+        id: "recordBranch",
+        label: "Branch / Location",
+        placeholder: "e.g. Ikeja Branch"
+      },
+      {
+        id: "recordNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Cards": {
+    titleField: "recordCardName",
+    fields: [
+      {
+        id: "recordCardName",
+        label: "Card Name",
+        placeholder: "e.g. Personal Debit Card",
+        required: true
+      },
+      {
+        id: "recordCardIssuer",
+        label: "Bank / Issuer",
+        placeholder: "e.g. Access Bank",
+        required: true
+      },
+      {
+        id: "recordCardType",
+        label: "Card Type",
+        placeholder: "e.g. Debit, Credit or Prepaid"
+      },
+      {
+        id: "recordCardNetwork",
+        label: "Card Network",
+        placeholder: "e.g. Visa, Mastercard or Verve"
+      },
+      {
+        id: "recordCardNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Crypto": {
+    titleField: "recordCryptoName",
+    fields: [
+      {
+        id: "recordCryptoName",
+        label: "Cryptocurrency Name",
+        placeholder: "e.g. Bitcoin",
+        required: true
+      },
+      {
+        id: "recordCryptoNetwork",
+        label: "Network",
+        placeholder: "e.g. Bitcoin Network"
+      },
+      {
+        id: "recordCryptoAddress",
+        label: "Secret phrase/Private key",
+        placeholder: "Your secret phrase or private key"
+      },
+      {
+        id: "recordCryptoAssetType",
+        label: "Wallet password",
+        placeholder: "e.g. Your wallet password"
+      },
+      {
+        id: "recordCryptoNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Digital Wallets": {
+    titleField: "recordWalletName",
+    fields: [
+      {
+        id: "recordWalletName",
+        label: "Wallet Name",
+        placeholder: "e.g. My Main Wallet",
+        required: true
+      },
+      {
+        id: "recordWalletProvider",
+        label: "Provider",
+        placeholder: "e.g. PayPal"
+      },
+      {
+        id: "recordWalletType",
+        label: "Wallet Type",
+        placeholder: "e.g. Mobile Wallet"
+      },
+      {
+        id: "recordWalletWebsite",
+        label: "Website / App",
+        placeholder: "e.g. paypal.com"
+      },
+      {
+        id: "recordWalletNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Loans": {
+    titleField: "loanName",
+    fields: [
+      {
+        id: "loanName",
+        label: "Loan Name",
+        placeholder: "e.g. Personal Loan",
+        required: true
+      },
+      {
+        id: "loanProvider",
+        label: "Lender / Institution",
+        placeholder: "e.g. GTBank"
+      },
+      {
+        id: "loanAmount",
+        label: "Amount",
+        placeholder: "e.g. ₦1,000,000"
+      },
+      {
+        id: "loanRate",
+        label: "Interest Rate",
+        placeholder: "e.g. 15%"
+      },
+      {
+        id: "loanDueDate",
+        label: "Due Date",
+        placeholder: "e.g. 2027-05-10"
+      },
+      {
+        id: "loanNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Savings & Investments": {
+    titleField: "investmentName",
+    fields: [
+      {
+        id: "investmentName",
+        label: "Account / Investment Name",
+        placeholder: "e.g. Fixed Deposit",
+        required: true
+      },
+      {
+        id: "investmentProvider",
+        label: "Provider",
+        placeholder: "e.g. Access Bank"
+      },
+      {
+        id: "investmentType",
+        label: "Type",
+        placeholder: "e.g. Savings, Fixed Deposit, Stocks"
+      },
+      {
+        id: "investmentAmount",
+        label: "Amount",
+        placeholder: "e.g. ₦500,000"
+      },
+      {
+        id: "investmentDate",
+        label: "Maturity / Review Date",
+        placeholder: "e.g. 2027-01-01"
+      },
+      {
+        id: "investmentNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Bank Contacts": {
+    titleField: "contactName",
+    fields: [
+      {
+        id: "contactName",
+        label: "Contact Name",
+        placeholder: "e.g. Bank Support",
+        required: true
+      },
+      {
+        id: "contactBank",
+        label: "Bank / Institution",
+        placeholder: "e.g. Access Bank"
+      },
+      {
+        id: "contactPhone",
+        label: "Phone",
+        placeholder: "e.g. +234..."
+      },
+      {
+        id: "contactEmail",
+        label: "Email",
+        placeholder: "e.g. support@example.com"
+      },
+      {
+        id: "contactNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Bank Branches": {
+    titleField: "branchName",
+    fields: [
+      {
+        id: "branchName",
+        label: "Branch Name",
+        placeholder: "e.g. Ikeja Branch",
+        required: true
+      },
+      {
+        id: "branchBank",
+        label: "Bank / Institution",
+        placeholder: "e.g. Access Bank"
+      },
+      {
+        id: "branchAddress",
+        label: "Address",
+        placeholder: "Branch address"
+      },
+      {
+        id: "branchPhone",
+        label: "Phone",
+        placeholder: "Branch phone number"
+      },
+      {
+        id: "branchNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Beneficiaries": {
+    titleField: "beneficiaryName",
+    fields: [
+      {
+        id: "beneficiaryName",
+        label: "Beneficiary Name",
+        placeholder: "e.g. John Doe",
+        required: true
+      },
+      {
+        id: "beneficiaryBank",
+        label: "Bank",
+        placeholder: "e.g. Access Bank"
+      },
+      {
+        id: "beneficiaryAccount",
+        label: "Account / Reference",
+        placeholder: "Beneficiary account or reference"
+      },
+      {
+        id: "beneficiaryRelationship",
+        label: "Relationship",
+        placeholder: "e.g. Family"
+      },
+      {
+        id: "beneficiaryNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Payment Details": {
+    titleField: "paymentName",
+    fields: [
+      {
+        id: "paymentName",
+        label: "Payment Name",
+        placeholder: "e.g. Electricity Bill",
+        required: true
+      },
+      {
+        id: "paymentProvider",
+        label: "Provider",
+        placeholder: "e.g. Ikeja Electric"
+      },
+      {
+        id: "paymentReference",
+        label: "Payment Reference",
+        placeholder: "Reference number"
+      },
+      {
+        id: "paymentWebsite",
+        label: "Website / App",
+        placeholder: "Provider website or app"
+      },
+      {
+        id: "paymentNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Financial Documents": {
+    titleField: "documentName",
+    fields: [
+      {
+        id: "documentName",
+        label: "Document Name",
+        placeholder: "e.g. Bank Statement",
+        required: true
+      },
+      {
+        id: "documentType",
+        label: "Document Type",
+        placeholder: "e.g. Statement, Receipt"
+      },
+      {
+        id: "documentInstitution",
+        label: "Institution",
+        placeholder: "e.g. Access Bank"
+      },
+      {
+        id: "documentDate",
+        label: "Document Date",
+        placeholder: "e.g. 2026-09-22"
+      },
+      {
+        id: "documentLocation",
+        label: "Storage / Location",
+        placeholder: "Where the document is stored"
+      },
+      {
+        id: "documentNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  },
+
+
+  "Other Information": {
+    titleField: "otherName",
+    fields: [
+      {
+        id: "otherName",
+        label: "Title",
+        placeholder: "e.g. Financial Information",
+        required: true
+      },
+      {
+        id: "otherType",
+        label: "Type",
+        placeholder: "e.g. General Information"
+      },
+      {
+        id: "otherValue",
+        label: "Information",
+        placeholder: "Enter information"
+      },
+      {
+        id: "otherNotes",
+        label: "Notes",
+        placeholder: "Additional information"
+      }
+    ]
+  }
+
+};
+
+
+/* =========================
+   SCREEN CONTROL
+========================= */
+
+function hideAllScreens() {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(screen => {
+      screen.classList.remove("active");
+    });
+
+}
+
+
+function showScreen(screen) {
+
+  hideAllScreens();
+
+  if (!screen) {
+    console.error("Screen not found.");
+    return;
+  }
+
+  screen.classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "instant"
+  });
+
+}
+
+
+function setBottomNav(activeButton) {
+
+  document
+    .querySelectorAll(".bottom-nav-button")
+    .forEach(button => {
+      button.classList.remove("active");
+    });
+
+  if (activeButton) {
+    activeButton.classList.add("active");
+  }
+
+}
+
+
+/* =========================
+   MASTER PASSWORD
+========================= */
 
 function getMasterPasswordKey(userId) {
+
   return `bankVaultMasterPassword_${userId}`;
+
 }
 
 
@@ -306,9 +812,12 @@ async function hashMasterPassword(password) {
   return hashArray
     .map(
       byte =>
-        byte.toString(16).padStart(2, "0")
+        byte
+          .toString(16)
+          .padStart(2, "0")
     )
     .join("");
+
 }
 
 
@@ -318,12 +827,22 @@ async function hasMasterPassword(userId) {
     return false;
   }
 
-  const key =
-    getMasterPasswordKey(userId);
-
   return Boolean(
-    localStorage.getItem(key)
+    localStorage.getItem(
+      getMasterPasswordKey(userId)
+    )
   );
+
+}
+
+
+function showMasterPasswordError(message) {
+
+  masterPasswordError.textContent =
+    message;
+
+  masterPasswordError.style.display =
+    message ? "block" : "none";
 
 }
 
@@ -347,13 +866,14 @@ function showMasterPasswordSetup() {
 
   confirmMasterPasswordGroup.style.display =
     "block";
-  confirmMasterPasswordInput.required = false;
+
+  confirmMasterPasswordInput.required =
+    true;
 
   masterPasswordSubmit.textContent =
     "Create Master Password";
 
-  masterPasswordError.style.display =
-    "none";
+  showMasterPasswordError("");
 
   showScreen(
     masterPasswordScreen
@@ -386,11 +906,13 @@ function showMasterPasswordUnlock() {
   confirmMasterPasswordGroup.style.display =
     "none";
 
+  confirmMasterPasswordInput.required =
+    false;
+
   masterPasswordSubmit.textContent =
     "Unlock Bank Vault";
 
-  masterPasswordError.style.display =
-    "none";
+  showMasterPasswordError("");
 
   showScreen(
     masterPasswordScreen
@@ -403,24 +925,13 @@ function showMasterPasswordUnlock() {
 }
 
 
-function showMasterPasswordError(message) {
-
-  masterPasswordError.textContent =
-    message;
-
-  masterPasswordError.style.display =
-    "block";
-}
-
-
 masterPasswordForm.addEventListener(
   "submit",
   async event => {
-    
 
     event.preventDefault();
 
-try {
+    try {
 
       const password =
         masterPasswordInput.value;
@@ -454,10 +965,6 @@ try {
       }
 
 
-      /* =========================
-      SETUP
-      ========================= */
-
       if (
         masterPasswordMode ===
         "setup"
@@ -465,7 +972,6 @@ try {
 
         const confirmation =
           confirmMasterPasswordInput.value;
-
 
         if (password.length < 8) {
 
@@ -476,8 +982,10 @@ try {
           return;
         }
 
-
-        if (password !== confirmation) {
+        if (
+          password !==
+          confirmation
+        ) {
 
           showMasterPasswordError(
             "The passwords do not match."
@@ -494,7 +1002,9 @@ try {
 
 
         localStorage.setItem(
-          getMasterPasswordKey(user.id),
+          getMasterPasswordKey(
+            user.id
+          ),
           hash
         );
 
@@ -512,13 +1022,11 @@ try {
       }
 
 
-      /* =========================
-      UNLOCK
-      ========================= */
-
       const savedHash =
         localStorage.getItem(
-          getMasterPasswordKey(user.id)
+          getMasterPasswordKey(
+            user.id
+          )
         );
 
 
@@ -579,111 +1087,153 @@ try {
 );
 
 
+/* =========================
+   SESSION
+========================= */
+
 async function open() {
+
   const {
-    data: { user },
+    data: {
+      user
+    },
     error
-  } = await supabase.auth.getUser();
+  } =
+    await supabase.auth.getUser();
 
   if (error || !user) {
-    showScreen(authScreen);
+
+    showScreen(
+      authScreen
+    );
+
     return;
   }
+
 
   const passwordExists =
-    await hasMasterPassword(user.id);
+    await hasMasterPassword(
+      user.id
+    );
+
 
   if (passwordExists) {
+
     showMasterPasswordUnlock();
+
   } else {
+
     showMasterPasswordSetup();
+
   }
+
 }
+
 
 async function openDashboardAfterMasterPassword() {
+
   const {
-    data: { user }
-  } = await supabase.auth.getUser();
+    data: {
+      user
+    }
+  } =
+    await supabase.auth.getUser();
+
 
   if (!user) {
-    showScreen(authScreen);
+
+    showScreen(
+      authScreen
+    );
+
     return;
   }
 
-  if (user.id === ADMIN_USER_ID) {
-    adminButton.style.display = "block";
+
+  if (
+    user.id ===
+    ADMIN_USER_ID
+  ) {
+
+    adminButton.style.display =
+      "flex";
+
   } else {
-    adminButton.style.display = "none";
+
+    adminButton.style.display =
+      "none";
+
   }
 
-  showScreen(dashboardScreen);
+
+  showScreen(
+    dashboardScreen
+  );
+
+  setBottomNav(
+    homeNavButton
+  );
+
   await loadRecords();
+
 }
 
 
 /* =========================
-SCREEN CONTROL
+   WELCOME
 ========================= */
 
-function hideAllScreens() {
-  welcomeScreen.style.display = "none";
-  authScreen.style.display = "none";
-  masterPasswordScreen.style.display = "none";
-  dashboardScreen.style.display = "none";
-  categoryScreen.style.display = "none";
-  searchScreen.style.display = "none";
-  recordScreen.style.display = "none";
-  adminScreen.style.display = "none";
-  settingsScreen.style.display = "none";
-}
+getStartedButton.addEventListener(
+  "click",
+  () => {
 
-function showScreen(screen) {
-  hideAllScreens();
+    showScreen(
+      authScreen
+    );
 
-  if (!screen) {
-    console.error("Screen not found");
-    return;
   }
-
-  screen.style.display = "block";
-}
-
-
-/* =========================
-WELCOME
-========================= */
-
-getStartedButton.addEventListener("click", () => {
-  hideAllScreens();
-  authScreen.style.display = "block";
-});
+);
 
 
 backButton.addEventListener(
   "click",
   () => {
 
-    showScreen(welcomeScreen);
+    showScreen(
+      welcomeScreen
+    );
 
   }
 );
 
 
 /* =========================
-AUTH TABS
+   AUTH TABS
 ========================= */
 
 loginTab.addEventListener(
   "click",
   () => {
 
-    signupMode = false;
+    signupMode =
+      false;
 
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
+    loginTab.classList.add(
+      "active"
+    );
 
-    nameField.style.display = "none";
-    nameInput.required = false;
+    signupTab.classList.remove(
+      "active"
+    );
+
+    nameField.style.display =
+      "none";
+
+    nameInput.required =
+      false;
+
+    passwordInput.autocomplete =
+      "current-password";
 
     authTitle.textContent =
       "Welcome back";
@@ -696,13 +1246,25 @@ signupTab.addEventListener(
   "click",
   () => {
 
-    signupMode = true;
+    signupMode =
+      true;
 
-    signupTab.classList.add("active");
-    loginTab.classList.remove("active");
+    signupTab.classList.add(
+      "active"
+    );
 
-    nameField.style.display = "block";
-    nameInput.required = true;
+    loginTab.classList.remove(
+      "active"
+    );
+
+    nameField.style.display =
+      "block";
+
+    nameInput.required =
+      true;
+
+    passwordInput.autocomplete =
+      "new-password";
 
     authTitle.textContent =
       "Create account";
@@ -712,12 +1274,12 @@ signupTab.addEventListener(
 
 
 /* =========================
-AUTHENTICATION
+   AUTHENTICATION
 ========================= */
 
 authForm.addEventListener(
   "submit",
-  async (event) => {
+  async event => {
 
     event.preventDefault();
 
@@ -730,6 +1292,7 @@ authForm.addEventListener(
     const name =
       nameInput.value.trim();
 
+
     if (!email || !password) {
 
       alert(
@@ -739,7 +1302,11 @@ authForm.addEventListener(
       return;
     }
 
-    if (signupMode && !name) {
+
+    if (
+      signupMode &&
+      !name
+    ) {
 
       alert(
         "Please enter your name."
@@ -748,15 +1315,19 @@ authForm.addEventListener(
       return;
     }
 
+
     const submitButton =
       authForm.querySelector(
         "button[type='submit']"
       );
 
-    submitButton.disabled = true;
+
+    submitButton.disabled =
+      true;
 
     submitButton.textContent =
       "Please wait...";
+
 
     try {
 
@@ -773,40 +1344,48 @@ authForm.addEventListener(
 
             options: {
               data: {
-                full_name: name
+                full_name: name,
+                name: name
               }
             }
 
           });
 
+
         if (error) {
           throw error;
         }
 
+
         if (data.session) {
 
           const {
-  data: {
-    user
-  }
-} = await supabase.auth.getUser();
+            data: {
+              user
+            }
+          } =
+            await supabase.auth.getUser();
 
-if (user) {
 
-  const passwordExists =
-    await hasMasterPassword(user.id);
+          if (user) {
 
-  if (passwordExists) {
+            const passwordExists =
+              await hasMasterPassword(
+                user.id
+              );
 
-    showMasterPasswordUnlock();
 
-  } else {
+            if (passwordExists) {
 
-    showMasterPasswordSetup();
+              showMasterPasswordUnlock();
 
-  }
+            } else {
 
-}
+              showMasterPasswordSetup();
+
+            }
+
+          }
 
         } else {
 
@@ -814,7 +1393,8 @@ if (user) {
             "Account created. Check your email if Supabase asks you to confirm your account."
           );
 
-          signupMode = false;
+          signupMode =
+            false;
 
           loginTab.click();
 
@@ -832,9 +1412,11 @@ if (user) {
 
           });
 
+
         if (error) {
           throw error;
         }
+
 
         await open();
 
@@ -842,7 +1424,9 @@ if (user) {
 
     } catch (error) {
 
-      console.error(error);
+      console.error(
+        error
+      );
 
       alert(
         error.message ||
@@ -851,7 +1435,8 @@ if (user) {
 
     } finally {
 
-      submitButton.disabled = false;
+      submitButton.disabled =
+        false;
 
       submitButton.textContent =
         "Continue";
@@ -863,14 +1448,7 @@ if (user) {
 
 
 /* =========================
-DASHBOARD
-========================= */
-
-
-
-
-/* =========================
-LOAD RECORDS
+   LOAD RECORDS
 ========================= */
 
 async function loadRecords() {
@@ -883,6 +1461,10 @@ async function loadRecords() {
     await supabase.auth.getUser();
 
 
+  if (!user) {
+    return;
+  }
+
 
   const {
     data,
@@ -898,24 +1480,39 @@ async function loadRecords() {
         }
       );
 
+
   if (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     alert(
       "Could not load your records."
     );
 
     return;
-
   }
+
 
   userRecords =
     data || [];
 
   updateCounts();
 
+
+  if (selectedCategory) {
+
+    renderCategoryRecords();
+
+  }
+
 }
+
+
+/* =========================
+   ADMIN RECORDS
+========================= */
 
 async function loadAdminRecords() {
 
@@ -926,7 +1523,11 @@ async function loadAdminRecords() {
   } =
     await supabase.auth.getUser();
 
-  if (!user || user.id !== ADMIN_USER_ID) {
+
+  if (
+    !user ||
+    user.id !== ADMIN_USER_ID
+  ) {
 
     alert(
       "Admin access only."
@@ -937,16 +1538,18 @@ async function loadAdminRecords() {
     );
 
     return;
-
   }
+
 
   const adminRecords =
     document.getElementById(
       "adminRecords"
     );
 
+
   adminRecords.innerHTML =
     "Loading...";
+
 
   const {
     data,
@@ -962,87 +1565,78 @@ async function loadAdminRecords() {
         }
       );
 
+
   if (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     adminRecords.innerHTML =
       "Could not load user records.";
 
     return;
-
   }
 
-  if (!data || !data.length) {
+
+  if (
+    !data ||
+    !data.length
+  ) {
 
     adminRecords.innerHTML =
-      "No user records have been saved yet.";
+      `
+        <div class="empty-state">
+          <h3>No user records</h3>
+          <p>No records have been saved yet.</p>
+        </div>
+      `;
 
     return;
-
   }
+
 
   adminRecords.innerHTML =
     data
       .map(
         record => `
+          <div class="admin-record-card">
 
-          <div
-            style="
-              margin-bottom:14px;
-              padding:18px;
-              border-radius:22px;
-              background:#0d1a15;
-              border:1px solid rgba(255,255,255,.06);
-            "
-          >
-
-            <h3
-              style="
-                margin:0 0 12px;
-              "
-            >
+            <h3>
               ${escapeHtml(
-                record.title || "Record"
+                record.title ||
+                "Record"
               )}
             </h3>
 
-            <div
-              style="
-                color:#718078;
-                font-size:12px;
-                margin-bottom:10px;
-              "
-            >
+            <div class="admin-meta">
               Category:
               ${escapeHtml(
-                record.category || "—"
+                record.category ||
+                "—"
               )}
             </div>
 
-            <div
-              style="
-                color:#718078;
-                font-size:12px;
-                margin-bottom:10px;
-                overflow-wrap:anywhere;
-              "
-            >
+            <div class="admin-meta">
               User ID:
               ${escapeHtml(
-                record.user_id || "—"
+                record.user_id ||
+                "—"
               )}
             </div>
 
-            <div
-              style="
-                color:#d8e0dc;
-                font-size:14px;
-                line-height:1.6;
-                white-space:pre-wrap;
-                overflow-wrap:anywhere;
-              "
-            >
+            <div class="admin-meta">
+              Created:
+              ${
+                record.created_at
+                  ? new Date(
+                      record.created_at
+                    ).toLocaleString()
+                  : "—"
+              }
+            </div>
+
+            <div class="admin-content">
               ${escapeHtml(
                 record.content ||
                 "No additional information."
@@ -1050,7 +1644,6 @@ async function loadAdminRecords() {
             </div>
 
           </div>
-
         `
       )
       .join("");
@@ -1059,7 +1652,7 @@ async function loadAdminRecords() {
 
 
 /* =========================
- COUNTS
+   COUNTS
 ========================= */
 
 function updateCounts() {
@@ -1067,96 +1660,88 @@ function updateCounts() {
   totalRecords.textContent =
     userRecords.length;
 
+
   document
-    .querySelectorAll(".category")
-    .forEach(categoryButton => {
+    .querySelectorAll(
+      ".category"
+    )
+    .forEach(
+      categoryButton => {
 
-      const category =
-        categoryButton.dataset.category;
-
-      const count =
-        userRecords.filter(
-          record =>
-            record.category === category
-        ).length;
-
-      const countElement =
-        categoryButton.querySelector(
-          ".category-count"
-        );
-
-      if (countElement) {
-
-        countElement.textContent =
-          `${count} ${
-            count === 1
-              ? "record"
-              : "records"
-          }`;
-
-      }
-
-    });
-
-}
+        const category =
+          categoryButton.dataset.category;
 
 
-/* =========================
-CATEGORY BUTTONS
-========================= */
+        const count =
+          userRecords.filter(
+            record =>
+              record.category ===
+              category
+          ).length;
 
-document
-  .querySelectorAll(".category")
-  .forEach(button => {
 
-    button.addEventListener(
-      "click",
-      () => {
-
-        selectedCategory =
-          button.dataset.category;
-
-        categoryTitle.textContent =
-          selectedCategory;
-
-        categoryHeading.textContent =
-          selectedCategory;
-
-        renderCategoryRecords();
-
-        showScreen(
-          categoryScreen
-        );
-
-        const categoryPage =
-          document.getElementById(
-            "categoryPage"
+        const countElement =
+          categoryButton.querySelector(
+            ".category-count"
           );
 
-        if (categoryPage) {
 
-          categoryPage.classList.add(
-            "morphed-in"
-          );
+        if (countElement) {
+
+          countElement.textContent =
+            `${count} ${
+              count === 1
+                ? "record"
+                : "records"
+            }`;
 
         }
 
       }
     );
 
-  });
+}
 
 
 /* =========================
-DISPLAY SAVED RECORDS
+   CATEGORY BUTTONS
+========================= */
+
+document
+  .querySelectorAll(
+    ".category"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          selectedCategory =
+            button.dataset.category;
+
+          categoryTitle.textContent =
+            selectedCategory;
+
+          renderCategoryRecords();
+
+          showScreen(
+            categoryScreen
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================
+   RENDER CATEGORY
 ========================= */
 
 function renderCategoryRecords() {
-
-  const categoryBody =
-    categoryScreen.querySelector(
-      ".category-body"
-    );
 
   const records =
     userRecords.filter(
@@ -1165,12 +1750,15 @@ function renderCategoryRecords() {
         selectedCategory
     );
 
+
   let html = `
 
     <div class="category-intro">
 
       <h2>
-        ${escapeHtml(selectedCategory)}
+        ${escapeHtml(
+          selectedCategory
+        )}
       </h2>
 
       <p>
@@ -1197,8 +1785,7 @@ function renderCategoryRecords() {
         </h3>
 
         <p>
-          Add your first information
-          to this category.
+          Add your first information to this category.
         </p>
 
       </div>
@@ -1207,92 +1794,90 @@ function renderCategoryRecords() {
 
   } else {
 
-    html += `
-
-      <div id="categoryRecords">
-
-    `;
+    html +=
+      `<div id="categoryRecords">`;
 
 
     records.forEach(
       record => {
 
-        const details =
-          formatRecordContent(
-            record.content
-          );
-
-
         html += `
 
           <div class="record-card">
 
-  <div class="record-card-header">
+            <div class="record-card-header">
 
-  <button
-    class="record-edit-button"
-    type="button"
-    aria-label="Edit record"
-  >
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 20H8L19 9L15 5L4 16V20Z"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M13.5 6.5L17.5 10.5"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
-  </button>
+              <div class="record-action-box">
 
-  <div class="record-card-title">
-      ${escapeHtml(
-        record.title || "Record"
-      )}
-    </div>
+                <button
+                  class="record-edit-button"
+                  type="button"
+                  data-record-id="${escapeHtml(record.id)}"
+                  aria-label="Edit record"
+                >
+                  ✎
+                </button>
 
-    <div class="record-card-category">
-      ${escapeHtml(
-        record.category || "Record"
-      )}
-    </div>
+                <button
+                  class="record-delete-button"
+                  type="button"
+                  data-record-id="${escapeHtml(record.id)}"
+                  aria-label="Delete record"
+                >
+                  ×
+                </button>
 
-  </div>
+              </div>
 
-  <div class="record-card-details">
-    ${details}
-  </div>
 
-  <div class="record-card-footer">
+              <div class="record-card-title">
 
-    <span>Saved</span>
+                ${escapeHtml(
+                  record.title ||
+                  "Record"
+                )}
 
-    <span>
-      ${
-        record.created_at
-          ? new Date(
-              record.created_at
-            ).toLocaleString()
-          : "—"
-      }
-    </span>
+              </div>
 
-  </div>
 
-</div>
+              <div class="record-card-category">
+
+                ${escapeHtml(
+                  record.category ||
+                  "Record"
+                )}
+
+              </div>
+
+            </div>
+
+
+            <div class="record-card-details">
+
+              ${formatRecordContent(
+                record.content
+              )}
+
+            </div>
+
+
+            <div class="record-card-footer">
+
+              <span>
+                Saved
+              </span>
+
+              <span>
+                ${
+                  record.created_at
+                    ? new Date(
+                        record.created_at
+                      ).toLocaleString()
+                    : "—"
+                }
+              </span>
+
+            </div>
 
           </div>
 
@@ -1302,11 +1887,8 @@ function renderCategoryRecords() {
     );
 
 
-    html += `
-
-      </div>
-
-    `;
+    html +=
+      `</div>`;
 
   }
 
@@ -1328,20 +1910,102 @@ function renderCategoryRecords() {
     html;
 
 
-  document
-    .getElementById(
+  const addRecordButton =
+    document.getElementById(
       "addRecordButton"
-    )
-    .addEventListener(
+    );
+
+
+  if (addRecordButton) {
+
+    addRecordButton.addEventListener(
       "click",
-      openAddRecord
+      () => {
+
+        editingRecordId =
+          null;
+
+        openAddRecord();
+
+      }
+    );
+
+  }
+
+
+  document
+    .querySelectorAll(
+      ".record-edit-button"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const recordId =
+              button.dataset.recordId;
+
+
+            const record =
+              userRecords.find(
+                item =>
+                  String(item.id) ===
+                  String(recordId)
+              );
+
+
+            if (!record) {
+              return;
+            }
+
+
+            editingRecordId =
+              record.id;
+
+
+            openAddRecord(
+              record
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      ".record-delete-button"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          async () => {
+
+            const recordId =
+              button.dataset.recordId;
+
+
+            await deleteRecord(
+              recordId
+            );
+
+          }
+        );
+
+      }
     );
 
 }
 
 
 /* =========================
-FORMAT RECORD DETAILS
+   FORMAT RECORD
 ========================= */
 
 function formatRecordContent(
@@ -1351,7 +2015,6 @@ function formatRecordContent(
   if (!content) {
 
     return `
-
       <div
         style="
           color:#718078;
@@ -1360,7 +2023,6 @@ function formatRecordContent(
       >
         No additional information.
       </div>
-
     `;
 
   }
@@ -1376,486 +2038,193 @@ function formatRecordContent(
 
 
   return lines
-    .map(line => {
+    .map(
+      line => {
 
-      const separator =
-        line.indexOf(":");
+        const separator =
+          line.indexOf(":");
 
 
-      if (separator === -1) {
+        if (
+          separator === -1
+        ) {
+
+          return `
+            <div
+              style="
+                margin-bottom:10px;
+                line-height:1.6;
+                color:#d8e0dc;
+              "
+            >
+              ${escapeHtml(line)}
+            </div>
+          `;
+
+        }
+
+
+        const label =
+          line
+            .slice(
+              0,
+              separator
+            )
+            .trim();
+
+
+        const value =
+          line
+            .slice(
+              separator + 1
+            )
+            .trim();
+
 
         return `
-
           <div
             style="
-              margin-bottom:10px;
-              line-height:1.6;
-              color:#d8e0dc;
+              margin-bottom:12px;
             "
           >
-            ${escapeHtml(line)}
-          </div>
 
+            <div
+              style="
+                color:#718078;
+                font-size:12px;
+                margin-bottom:4px;
+              "
+            >
+              ${escapeHtml(label)}
+            </div>
+
+            <div
+              style="
+                color:#ffffff;
+                font-size:14px;
+                line-height:1.5;
+                overflow-wrap:anywhere;
+              "
+            >
+              ${escapeHtml(value)}
+            </div>
+
+          </div>
         `;
 
       }
-
-
-      const label =
-        line
-          .slice(0, separator)
-          .trim();
-
-      const value =
-        line
-          .slice(separator + 1)
-          .trim();
-
-
-      return `
-
-        <div
-          style="
-            margin-bottom:12px;
-          "
-        >
-
-          <div
-            style="
-              color:#718078;
-              font-size:12px;
-              margin-bottom:4px;
-            "
-          >
-            ${escapeHtml(label)}
-          </div>
-
-          <div
-            style="
-              color:#ffffff;
-              font-size:14px;
-              line-height:1.5;
-              overflow-wrap:anywhere;
-            "
-          >
-            ${escapeHtml(value)}
-          </div>
-
-        </div>
-
-      `;
-
-    })
+    )
     .join("");
 
 }
 
 
 /* =========================
-OPEN ADD RECORD
+   OPEN ADD / EDIT
 ========================= */
 
-function openAddRecord() {
-  recordForm.style.display = "block";
+function openAddRecord(
+  record = null
+) {
+
+  const config =
+    categoryConfigs[
+      selectedCategory
+    ];
+
+
+  if (!config) {
+
+    alert(
+      "This category is not configured."
+    );
+
+    return;
+  }
+
 
   recordCategoryTitle.textContent =
-    selectedCategory;
+    record
+      ? `Edit ${selectedCategory}`
+      : selectedCategory;
 
 
-  /* =========================
-  BANK DETAILS
-  ========================= */
+  recordForm.innerHTML =
+    config.fields
+      .map(
+        field => `
 
-  if (
-    selectedCategory ===
-    "Bank Details"
-  ) {
+          <div class="input-group">
 
-    recordForm.innerHTML = `
+            <label for="${field.id}">
+              ${escapeHtml(field.label)}
+            </label>
 
-      <div class="input-group">
+            <input
+              id="${field.id}"
+              type="text"
+              placeholder="${escapeHtml(field.placeholder || "")}"
+              ${field.required ? "required" : ""}
+              autocomplete="off"
+              spellcheck="false"
+            >
 
-        <label>
-          Bank / Institution Name
-        </label>
+          </div>
 
-        <input
-          id="recordBankName"
-          type="text"
-          placeholder="e.g. Access Bank"
-          required
+        `
+      )
+      .join("") + `
+
+        <button
+          class="primary-button"
+          type="submit"
         >
+          ${record ? "Update Record" : "Save Record"}
+        </button>
 
-      </div>
+      `;
 
 
-      <div class="input-group">
+  if (record) {
 
-        <label>
-          Account Name
-        </label>
+    const values =
+      parseRecordValues(
+        record.content
+      );
 
-        <input
-          id="recordAccountName"
-          type="text"
-          placeholder="e.g. John Doe"
-          required
-        >
 
-      </div>
+    config.fields.forEach(
+      field => {
 
+        const input =
+          document.getElementById(
+            field.id
+          );
 
-      <div class="input-group">
 
-        <label>
-          Account Type
-        </label>
+        if (!input) {
+          return;
+        }
 
-        <input
-          id="recordAccountType"
-          type="text"
-          placeholder="e.g. Savings or Current"
-        >
 
-      </div>
+        if (
+          field.id ===
+          config.titleField
+        ) {
 
+          input.value =
+            record.title || "";
 
-      <div class="input-group">
+        } else {
 
-        <label>
-          Branch / Location
-        </label>
+          input.value =
+            values[field.label] ||
+            "";
 
-        <input
-          id="recordBranch"
-          type="text"
-          placeholder="e.g. Ikeja Branch"
-        >
+        }
 
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Notes
-        </label>
-
-        <input
-          id="recordNotes"
-          type="text"
-          placeholder="Additional information"
-        >
-
-      </div>
-
-
-      <button
-        class="primary-button"
-        type="submit"
-      >
-        Save Record
-      </button>
-
-    `;
-
-  }
-
-
-  /* =========================
-  CARDS
-  ========================= */
-
-  else if (
-    selectedCategory ===
-    "Cards"
-  ) {
-
-    recordForm.innerHTML = `
-
-      <div class="input-group">
-
-        <label>
-          Card Name
-        </label>
-
-        <input
-          id="recordCardName"
-          type="text"
-          placeholder="e.g. Personal Debit Card"
-          required
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Bank / Issuer
-        </label>
-
-        <input
-          id="recordCardIssuer"
-          type="text"
-          placeholder="e.g. Access Bank"
-          required
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Card Type
-        </label>
-
-        <input
-          id="recordCardType"
-          type="text"
-          placeholder="e.g. Debit, Credit or Prepaid"
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Card Network
-        </label>
-
-        <input
-          id="recordCardNetwork"
-          type="text"
-          placeholder="e.g. Visa, Mastercard or Verve"
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Notes
-        </label>
-
-        <input
-          id="recordCardNotes"
-          type="text"
-          placeholder="Additional information"
-        >
-
-      </div>
-
-
-      <button
-        class="primary-button"
-        type="submit"
-      >
-        Save Record
-      </button>
-
-    `;
-
-  }
-
-
-  /* =========================
-  CRYPTO
-  ========================= */
-
-  else if (
-    selectedCategory ===
-    "Crypto"
-  ) {
-
-    recordForm.innerHTML = `
-
-      <div class="input-group">
-
-        <label>
-          Cryptocurrency Name
-        </label>
-
-        <input
-          id="recordCryptoName"
-          type="text"
-          placeholder="e.g. Bitcoin"
-          required
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Network
-        </label>
-
-        <input
-          id="recordCryptoNetwork"
-          type="text"
-          placeholder="e.g. Bitcoin Network"
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Secret phrase/Private key
-        </label>
-
-        <input
-          id="recordCryptoAddress"
-          type="text"
-          placeholder="Your secret phrase"
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Wallet password
-        </label>
-
-        <input
-          id="recordCryptoAssetType"
-          type="text"
-          placeholder="e.g. Your wallet pssword"
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Notes
-        </label>
-
-        <input
-          id="recordCryptoNotes"
-          type="text"
-          placeholder="Additional information"
-        >
-
-      </div>
-
-
-      <button
-        class="primary-button"
-        type="submit"
-      >
-        Save Record
-      </button>
-
-    `;
-
-  }
-
-
-  /* =========================
-  DIGITAL WALLETS
-  ========================= */
-
-  else if (
-    selectedCategory ===
-    "Digital Wallets"
-  ) {
-
-    recordForm.innerHTML = `
-
-      <div class="input-group">
-
-        <label>
-          Wallet Name
-        </label>
-
-        <input
-          id="recordWalletName"
-          type="text"
-          placeholder="e.g. My Main Wallet"
-          required
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Provider
-        </label>
-
-        <input
-          id="recordWalletProvider"
-          type="text"
-          placeholder="e.g. PayPal"
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Wallet Type
-        </label>
-
-        <input
-          id="recordWalletType"
-          type="text"
-          placeholder="e.g. Mobile Wallet"
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Website / App
-        </label>
-
-        <input
-          id="recordWalletWebsite"
-          type="text"
-          placeholder="e.g. paypal.com"
-        >
-
-      </div>
-
-
-      <div class="input-group">
-
-        <label>
-          Notes
-        </label>
-
-        <input
-          id="recordWalletNotes"
-          type="text"
-          placeholder="Additional information"
-        >
-
-      </div>
-
-
-      <button
-        class="primary-button"
-        type="submit"
-      >
-        Save Record
-      </button>
-
-    `;
+      }
+    );
 
   }
 
@@ -1868,37 +2237,173 @@ function openAddRecord() {
 
 
 /* =========================
-CATEGORY BACK
+   PARSE RECORD CONTENT
 ========================= */
 
-categoryBackButton.addEventListener("click", () => {
-  showScreen(dashboardScreen);
-});
+function parseRecordValues(
+  content
+) {
+
+  const values = {};
+
+  String(
+    content || ""
+  )
+    .split("\n")
+    .forEach(
+      line => {
+
+        const separator =
+          line.indexOf(":");
 
 
-/* =========================
-RECORD BACK
-========================= */
+        if (
+          separator === -1
+        ) {
+          return;
+        }
 
-recordBackButton.addEventListener(
-  "click",
-  () => {
 
-    showScreen(
-      categoryScreen
+        const label =
+          line
+            .slice(
+              0,
+              separator
+            )
+            .trim();
+
+
+        const value =
+          line
+            .slice(
+              separator + 1
+            )
+            .trim();
+
+
+        values[label] =
+          value;
+
+      }
     );
 
-  }
-);
+
+  return values;
+
+}
 
 
 /* =========================
-SAVE RECORD
+   DELETE RECORD
+========================= */
+
+async function deleteRecord(
+  recordId
+) {
+
+  const record =
+    userRecords.find(
+      item =>
+        String(item.id) ===
+        String(recordId)
+    );
+
+
+  if (!record) {
+    return;
+  }
+
+
+  const confirmed =
+    confirm(
+      `Delete "${record.title || "this record"}"?`
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  const {
+    data: {
+      user
+    }
+  } =
+    await supabase.auth.getUser();
+
+
+  if (!user) {
+
+    alert(
+      "Please log in again."
+    );
+
+    showScreen(
+      authScreen
+    );
+
+    return;
+  }
+
+
+  const {
+    error
+  } =
+    await supabase
+      .from("user_items")
+      .delete()
+      .eq(
+        "id",
+        recordId
+      )
+      .eq(
+        "user_id",
+        user.id
+      );
+
+
+  if (error) {
+
+    console.error(
+      error
+    );
+
+    alert(
+      error.message ||
+      "Could not delete the record."
+    );
+
+    return;
+  }
+
+
+  userRecords =
+    userRecords.filter(
+      item =>
+        String(item.id) !==
+        String(recordId)
+    );
+
+
+  updateCounts();
+
+  renderCategoryRecords();
+
+  alert(
+    "Record deleted."
+  );
+
+}
+
+
+/* =========================
+   SAVE RECORD
 ========================= */
 
 recordForm.addEventListener(
   "submit",
-  async (event) => {
+  async event => {
 
     event.preventDefault();
 
@@ -1922,527 +2427,289 @@ recordForm.addEventListener(
       );
 
       return;
-
     }
 
 
-    let title = "";
-
-    let contentParts = [];
-
-
-    /* =========================
-    BANK DETAILS
-    ========================= */
-
-    if (
-      selectedCategory ===
-      "Bank Details"
-    ) {
-
-      const bankName =
-        document
-          .getElementById(
-            "recordBankName"
-          )
-          .value
-          .trim();
+    const config =
+      categoryConfigs[
+        selectedCategory
+      ];
 
 
-      const accountName =
-        document
-          .getElementById(
-            "recordAccountName"
-          )
-          .value
-          .trim();
+    if (!config) {
 
+      alert(
+        "This category is not configured."
+      );
 
-      const accountType =
-        document
-          .getElementById(
-            "recordAccountType"
-          )
-          .value
-          .trim();
-
-
-      const branch =
-        document
-          .getElementById(
-            "recordBranch"
-          )
-          .value
-          .trim();
-
-
-      const notes =
-        document
-          .getElementById(
-            "recordNotes"
-          )
-          .value
-          .trim();
-
-
-      if (!bankName) {
-
-        alert(
-          "Please enter a bank or institution name."
-        );
-
-        return;
-
-      }
-
-
-      title =
-        bankName;
-
-
-      if (accountName) {
-
-        contentParts.push(
-          `Account Name: ${accountName}`
-        );
-
-      }
-
-
-      if (accountType) {
-
-        contentParts.push(
-          `Account Type: ${accountType}`
-        );
-
-      }
-
-
-      if (branch) {
-
-        contentParts.push(
-          `Branch / Location: ${branch}`
-        );
-
-      }
-
-
-      if (notes) {
-
-        contentParts.push(
-          `Notes: ${notes}`
-        );
-
-      }
-
+      return;
     }
 
 
-    /* =========================
-    CARDS
-    ========================= */
-
-    else if (
-      selectedCategory ===
-      "Cards"
-    ) {
-
-      const cardName =
-        document
-          .getElementById(
-            "recordCardName"
-          )
-          .value
-          .trim();
+    const titleInput =
+      document.getElementById(
+        config.titleField
+      );
 
 
-      const cardIssuer =
-        document
-          .getElementById(
-            "recordCardIssuer"
-          )
-          .value
-          .trim();
+    const title =
+      titleInput
+        ? titleInput.value.trim()
+        : "";
 
 
-      const cardType =
-        document
-          .getElementById(
-            "recordCardType"
-          )
-          .value
-          .trim();
+    if (!title) {
 
+      alert(
+        "Please complete the required title field."
+      );
 
-      const cardNetwork =
-        document
-          .getElementById(
-            "recordCardNetwork"
-          )
-          .value
-          .trim();
-
-
-      const cardNotes =
-        document
-          .getElementById(
-            "recordCardNotes"
-          )
-          .value
-          .trim();
-
-
-      if (!cardName) {
-
-        alert(
-          "Please enter a card name."
-        );
-
-        return;
-
-      }
-
-
-      title =
-        cardName;
-
-
-      if (cardIssuer) {
-
-        contentParts.push(
-          `Bank / Issuer: ${cardIssuer}`
-        );
-
-      }
-
-
-      if (cardType) {
-
-        contentParts.push(
-          `Card Type: ${cardType}`
-        );
-
-      }
-
-
-      if (cardNetwork) {
-
-        contentParts.push(
-          `Card Network: ${cardNetwork}`
-        );
-
-      }
-
-
-      if (cardNotes) {
-
-        contentParts.push(
-          `Notes: ${cardNotes}`
-        );
-
-      }
-
+      return;
     }
 
 
-    /* =========================
-    CRYPTO
-    ========================= */
-
-    else if (
-      selectedCategory ===
-      "Crypto"
-    ) {
-
-      const cryptoName =
-        document
-          .getElementById(
-            "recordCryptoName"
-          )
-          .value
-          .trim();
+    const contentParts = [];
 
 
-      const cryptoNetwork =
-        document
-          .getElementById(
-            "recordCryptoNetwork"
-          )
-          .value
-          .trim();
+    config.fields.forEach(
+      field => {
+
+        if (
+          field.id ===
+          config.titleField
+        ) {
+          return;
+        }
 
 
-      const cryptoAddress =
-        document
-          .getElementById(
-            "recordCryptoAddress"
-          )
-          .value
-          .trim();
+        const input =
+          document.getElementById(
+            field.id
+          );
 
 
-      const cryptoAssetType =
-        document
-          .getElementById(
-            "recordCryptoAssetType"
-          )
-          .value
-          .trim();
+        if (!input) {
+          return;
+        }
 
 
-      const cryptoNotes =
-        document
-          .getElementById(
-            "recordCryptoNotes"
-          )
-          .value
-          .trim();
+        const value =
+          input.value.trim();
 
 
-      if (!cryptoName) {
+        if (value) {
 
-        alert(
-          "Please enter a cryptocurrency name."
-        );
+          contentParts.push(
+            `${field.label}: ${value}`
+          );
 
-        return;
+        }
 
       }
-
-
-      title =
-        cryptoName;
-
-
-      if (cryptoNetwork) {
-
-        contentParts.push(
-          `Cryptocurrency network: ${cryptoNetwork}`
-        );
-
-      }
-
-
-      if (cryptoAddress) {
-
-        contentParts.push(
-          `Secret phrase/Public key: ${cryptoAddress}`
-        );
-
-      }
-
-
-      if (cryptoAssetType) {
-
-        contentParts.push(
-          `Wallet password: ${cryptoAssetType}`
-        );
-
-      }
-
-
-      if (cryptoNotes) {
-
-        contentParts.push(
-          `Notes: ${cryptoNotes}`
-        );
-
-      }
-
-    }
-
-
-    /* =========================
-    DIGITAL WALLETS
-    ========================= */
-
-    else if (
-      selectedCategory ===
-      "Digital Wallets"
-    ) {
-
-      const walletName =
-        document
-          .getElementById(
-            "recordWalletName"
-          )
-          .value
-          .trim();
-
-
-      const walletProvider =
-        document
-          .getElementById(
-            "recordWalletProvider"
-          )
-          .value
-          .trim();
-
-
-      const walletType =
-        document
-          .getElementById(
-            "recordWalletType"
-          )
-          .value
-          .trim();
-
-
-      const walletWebsite =
-        document
-          .getElementById(
-            "recordWalletWebsite"
-          )
-          .value
-          .trim();
-
-
-      const walletNotes =
-        document
-          .getElementById(
-            "recordWalletNotes"
-          )
-          .value
-          .trim();
-
-
-      if (!walletName) {
-
-        alert(
-          "Please enter a wallet name."
-        );
-
-        return;
-
-      }
-
-
-      title =
-        walletName;
-
-
-      if (walletProvider) {
-
-        contentParts.push(
-          `Provider: ${walletProvider}`
-        );
-
-      }
-
-
-      if (walletType) {
-
-        contentParts.push(
-          `Wallet Type: ${walletType}`
-        );
-
-      }
-
-
-      if (walletWebsite) {
-
-        contentParts.push(
-          `Website / App: ${walletWebsite}`
-        );
-
-      }
-
-
-      if (walletNotes) {
-
-        contentParts.push(
-          `Notes: ${walletNotes}`
-        );
-
-      }
-
-    }
-
-/* =========================
-SAVE TO SUPABASE
-========================= */
-
-const content =
-  contentParts.join("\n");
-
-const saveButton =
-  recordForm.querySelector(
-    "button[type='submit']"
-  );
-
-saveButton.disabled = true;
-
-saveButton.textContent =
-  "Saving...";
-
-try {
-
-  const {
-    error
-  } =
-    await supabase
-      .from("user_items")
-      .insert({
-        category: selectedCategory,
-        title: title,
-        content: content,
-        user_id: user.id
-      });
-
-  if (error) {
-    throw error;
-  }
-
-  alert(
-    "Record saved."
-  );
-
-  await loadRecords();
-
-  renderCategoryRecords();
-
-  showScreen(
-    categoryScreen
-  );
-
-  const categoryPage =
-    document.getElementById(
-      "categoryPage"
     );
 
-  if (categoryPage) {
 
-    categoryPage.classList.add(
-      "morphed-in"
-    );
+    const content =
+      contentParts.join("\n");
+
+
+    const saveButton =
+      recordForm.querySelector(
+        "button[type='submit']"
+      );
+
+
+    if (saveButton) {
+
+      saveButton.disabled =
+        true;
+
+      saveButton.textContent =
+        editingRecordId
+          ? "Updating..."
+          : "Saving...";
+
+    }
+
+
+    try {
+
+      if (editingRecordId) {
+
+        const {
+          data,
+          error
+        } =
+          await supabase
+            .from("user_items")
+            .update({
+              category:
+                selectedCategory,
+              title,
+              content
+            })
+            .eq(
+              "id",
+              editingRecordId
+            )
+            .eq(
+              "user_id",
+              user.id
+            )
+            .select()
+            .single();
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        const recordIndex =
+          userRecords.findIndex(
+            record =>
+              String(record.id) ===
+              String(editingRecordId)
+          );
+
+
+        if (
+          recordIndex !==
+          -1
+        ) {
+
+          userRecords[
+            recordIndex
+          ] = data;
+
+        }
+
+
+        editingRecordId =
+          null;
+
+
+        alert(
+          "Record updated."
+        );
+
+      } else {
+
+        const {
+          data,
+          error
+        } =
+          await supabase
+            .from("user_items")
+            .insert({
+              category:
+                selectedCategory,
+              title,
+              content,
+              user_id:
+                user.id
+            })
+            .select()
+            .single();
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        userRecords.unshift(
+          data
+        );
+
+
+        alert(
+          "Record saved."
+        );
+
+      }
+
+
+      updateCounts();
+
+      renderCategoryRecords();
+
+      showScreen(
+        categoryScreen
+      );
+
+    } catch (error) {
+
+      console.error(
+        error
+      );
+
+      alert(
+        error.message ||
+        "Could not save the record."
+      );
+
+    } finally {
+
+      if (saveButton) {
+
+        saveButton.disabled =
+          false;
+
+        saveButton.textContent =
+          editingRecordId
+            ? "Update Record"
+            : "Save Record";
+
+      }
+
+    }
 
   }
-
-} catch (error) {
-
-  console.error(error);
-
-  alert(
-    error.message ||
-    "Could not save the record."
-  );
-
-} finally {
-
-  saveButton.disabled =
-    false;
-
-  saveButton.textContent =
-    "Save Record";
-
-}
-
-}
 );
 
 
 /* =========================
-SEARCH
+   CATEGORY BACK
+========================= */
+
+categoryBackButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      dashboardScreen
+    );
+
+    setBottomNav(
+      homeNavButton
+    );
+
+  }
+);
+
+
+/* =========================
+   RECORD BACK
+========================= */
+
+recordBackButton.addEventListener(
+  "click",
+  () => {
+
+    editingRecordId =
+      null;
+
+    showScreen(
+      categoryScreen
+    );
+
+  }
+);
+
+
+/* =========================
+   SEARCH
 ========================= */
 
 searchNavButton.addEventListener(
@@ -2453,21 +2720,38 @@ searchNavButton.addEventListener(
       searchScreen
     );
 
+    setBottomNav(
+      searchNavButton
+    );
+
     searchInput.value =
       "";
 
     searchResults.innerHTML =
       "";
 
-    searchInput.focus();
+    setTimeout(() => {
+      searchInput.focus();
+    }, 100);
 
   }
 );
 
 
-searchBackButton.addEventListener("click", () => {
-  showScreen(dashboardScreen);
-});
+searchBackButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      dashboardScreen
+    );
+
+    setBottomNav(
+      homeNavButton
+    );
+
+  }
+);
 
 
 searchInput.addEventListener(
@@ -2486,7 +2770,6 @@ searchInput.addEventListener(
         "";
 
       return;
-
     }
 
 
@@ -2500,7 +2783,9 @@ searchInput.addEventListener(
               record.title || ""
             )
               .toLowerCase()
-              .includes(query)
+              .includes(
+                query
+              )
 
             ||
 
@@ -2508,7 +2793,9 @@ searchInput.addEventListener(
               record.category || ""
             )
               .toLowerCase()
-              .includes(query)
+              .includes(
+                query
+              )
 
             ||
 
@@ -2516,7 +2803,9 @@ searchInput.addEventListener(
               record.content || ""
             )
               .toLowerCase()
-              .includes(query)
+              .includes(
+                query
+              )
 
           );
 
@@ -2543,7 +2832,6 @@ searchInput.addEventListener(
       `;
 
       return;
-
     }
 
 
@@ -2552,31 +2840,28 @@ searchInput.addEventListener(
         .map(
           record => `
 
-            <div
-              class="empty-state"
-              style="
-                margin-bottom:12px;
-                text-align:left;
-              "
-            >
+            <div class="search-result-card">
 
               <h3>
                 ${escapeHtml(
-                  record.title
+                  record.title ||
+                  "Record"
                 )}
               </h3>
 
-              <p>
+              <div class="search-result-category">
                 ${escapeHtml(
-                  record.category
+                  record.category ||
+                  ""
                 )}
-              </p>
+              </div>
 
-              <p>
+              <div class="search-result-content">
                 ${escapeHtml(
-                  record.content || ""
+                  record.content ||
+                  "No additional information."
                 )}
-              </p>
+              </div>
 
             </div>
 
@@ -2589,16 +2874,27 @@ searchInput.addEventListener(
 
 
 /* =========================
-HOME
+   HOME
 ========================= */
 
-homeNavButton.addEventListener("click", () => {
-  showScreen(dashboardScreen);
-});
+homeNavButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      dashboardScreen
+    );
+
+    setBottomNav(
+      homeNavButton
+    );
+
+  }
+);
 
 
 /* =========================
-SETTINGS
+   SETTINGS
 ========================= */
 
 settingsNavButton.addEventListener(
@@ -2609,21 +2905,149 @@ settingsNavButton.addEventListener(
       settingsScreen
     );
 
+    setBottomNav(
+      settingsNavButton
+    );
+
   }
 );
 
-settingsBackButton.addEventListener("click", () => {
-  showScreen(dashboardScreen);
-});
 
- logoutButton.addEventListener(
+settingsBackButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      dashboardScreen
+    );
+
+    setBottomNav(
+      homeNavButton
+    );
+
+  }
+);
+
+
+/* =========================
+   PROFILE
+========================= */
+
+profileButton.addEventListener(
   "click",
   async () => {
+
+    showScreen(
+      profileScreen
+    );
+
+    await loadProfileData();
+
+  }
+);
+
+
+profileBackButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      settingsScreen
+    );
+
+  }
+);
+
+
+async function loadProfileData() {
+
+  const {
+    data: {
+      user
+    },
+    error
+  } =
+    await supabase.auth.getUser();
+
+
+  if (
+    error ||
+    !user
+  ) {
+    return;
+  }
+
+
+  const profileName =
+    document.getElementById(
+      "profileName"
+    );
+
+  const profileEmail =
+    document.getElementById(
+      "profileEmail"
+    );
+
+  const profileUserId =
+    document.getElementById(
+      "profileUserId"
+    );
+
+
+  if (profileName) {
+
+    profileName.textContent =
+      user.user_metadata?.full_name ||
+      user.user_metadata?.name ||
+      "Bank Vault User";
+
+  }
+
+
+  if (profileEmail) {
+
+    profileEmail.textContent =
+      user.email ||
+      "No email available";
+
+  }
+
+
+  if (profileUserId) {
+
+    profileUserId.textContent =
+      user.id ||
+      "Unavailable";
+
+  }
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+logoutButton.addEventListener(
+  "click",
+  async () => {
+
+    const confirmed =
+      confirm(
+        "Are you sure you want to log out?"
+      );
+
+
+    if (!confirmed) {
+      return;
+    }
+
 
     const {
       error
     } =
       await supabase.auth.signOut();
+
 
     if (error) {
 
@@ -2633,8 +3057,13 @@ settingsBackButton.addEventListener("click", () => {
       );
 
       return;
-
     }
+
+
+    userRecords = [];
+
+    editingRecordId =
+      null;
 
     showScreen(
       welcomeScreen
@@ -2645,7 +3074,7 @@ settingsBackButton.addEventListener("click", () => {
 
 
 /* =========================
-MENU
+   MENU
 ========================= */
 
 menuButton.addEventListener(
@@ -2653,7 +3082,7 @@ menuButton.addEventListener(
   () => {
 
     alert(
-      "Bank Vault\n\nStore and organize ordinary financial information. Do not store passwords, PINs, seed phrases, private keys, authentication codes, card numbers, CVV codes, or other secrets."
+      "Bank Vault\n\nOrganize and store your financial information using your own account. Your records are stored in Supabase and are available after authentication."
     );
 
   }
@@ -2661,7 +3090,415 @@ menuButton.addEventListener(
 
 
 /* =========================
-HTML SAFETY
+   ADMIN
+========================= */
+
+adminButton.addEventListener(
+  "click",
+  async () => {
+
+    const {
+      data: {
+        user
+      }
+    } =
+      await supabase.auth.getUser();
+
+
+    if (
+      !user ||
+      user.id !==
+      ADMIN_USER_ID
+    ) {
+
+      alert(
+        "Admin access only."
+      );
+
+      return;
+    }
+
+
+    showScreen(
+      adminScreen
+    );
+
+    await loadAdminRecords();
+
+  }
+);
+
+
+adminBackButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      dashboardScreen
+    );
+
+    setBottomNav(
+      homeNavButton
+    );
+
+  }
+);
+
+
+/* =========================
+   NOTIFICATIONS
+========================= */
+
+function urlBase64ToUint8Array(
+  base64String
+) {
+
+  const padding =
+    "=".repeat(
+      (
+        4 -
+        (
+          base64String.length %
+          4
+        )
+      ) % 4
+    );
+
+
+  const base64 =
+    (
+      base64String +
+      padding
+    )
+      .replace(
+        /-/g,
+        "+"
+      )
+      .replace(
+        /_/g,
+        "/"
+      );
+
+
+  const rawData =
+    window.atob(
+      base64
+    );
+
+
+  return Uint8Array.from(
+    [...rawData]
+      .map(
+        char =>
+          char.charCodeAt(0)
+      )
+  );
+
+}
+
+
+async function enableBankVaultNotifications() {
+
+  try {
+
+    if (
+      !("Notification" in window)
+    ) {
+
+      alert(
+        "Notifications are not supported on this device."
+      );
+
+      return;
+    }
+
+
+    if (
+      !("serviceWorker" in navigator)
+    ) {
+
+      alert(
+        "Service workers are not supported."
+      );
+
+      return;
+    }
+
+
+    if (
+      !("PushManager" in window)
+    ) {
+
+      alert(
+        "Push notifications are not supported on this device."
+      );
+
+      return;
+    }
+
+
+    const {
+      data: {
+        user
+      },
+      error: userError
+    } =
+      await supabase.auth.getUser();
+
+
+    if (
+      userError ||
+      !user
+    ) {
+
+      alert(
+        "Please log in first."
+      );
+
+      return;
+    }
+
+
+    const permission =
+      await Notification.requestPermission();
+
+
+    if (
+      permission !==
+      "granted"
+    ) {
+
+      if (
+        permission ===
+        "denied"
+      ) {
+
+        alert(
+          "Notifications are blocked. Enable them in your browser settings."
+        );
+
+      } else {
+
+        alert(
+          "Notification permission was not granted."
+        );
+
+      }
+
+      return;
+    }
+
+
+    const registration =
+      await navigator.serviceWorker.ready;
+
+
+    let subscription =
+      await registration.pushManager.getSubscription();
+
+
+    if (!subscription) {
+
+      subscription =
+        await registration.pushManager.subscribe({
+
+          userVisibleOnly:
+            true,
+
+          applicationServerKey:
+            urlBase64ToUint8Array(
+              "BI7n11elHSW2ommddDiRJHzLq5E-KlvH8orqxSU3bqMxnzhHYSJVWj11vtRGcXfC6C1xWsp9fVBynQajtAmC5R4"
+            )
+
+        });
+
+    }
+
+
+    const subscriptionJson =
+      subscription.toJSON();
+
+
+    const {
+      error: saveError
+    } =
+      await supabase
+        .from(
+          "push_subscriptions"
+        )
+        .upsert(
+          {
+            user_id:
+              user.id,
+
+            endpoint:
+              subscriptionJson.endpoint,
+
+            p256dh:
+              subscriptionJson.keys?.p256dh,
+
+            auth:
+              subscriptionJson.keys?.auth
+          },
+          {
+            onConflict:
+              "endpoint"
+          }
+        );
+
+
+    if (saveError) {
+
+      console.error(
+        "Subscription save error:",
+        saveError
+      );
+
+      alert(
+        "Notification permission worked, but the device subscription could not be saved."
+      );
+
+      return;
+    }
+
+
+    alert(
+      "Bank Vault notifications are enabled on this device."
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Notification subscription error:",
+      error
+    );
+
+    alert(
+      "Unable to enable notifications."
+    );
+
+  }
+
+}
+
+
+async function sendBankVaultTestNotification() {
+
+  try {
+
+    const {
+      data: {
+        session
+      },
+      error: sessionError
+    } =
+      await supabase.auth.getSession();
+
+
+    if (
+      sessionError ||
+      !session
+    ) {
+
+      alert(
+        "Please log in first."
+      );
+
+      return;
+    }
+
+
+    const {
+      data,
+      error
+    } =
+      await supabase.functions.invoke(
+        "send-push",
+        {
+          body: {
+            title:
+              "Bank Vault",
+            body:
+              "Your Bank Vault push notifications are working.",
+            url:
+              "./"
+          }
+        }
+      );
+
+
+    if (error) {
+
+      console.error(
+        "Push function error:",
+        error
+      );
+
+      alert(
+        "Push error: " +
+        (
+          error.message ||
+          "Unknown error"
+        )
+      );
+
+      return;
+    }
+
+
+    console.log(
+      "Push notification result:",
+      data
+    );
+
+
+    alert(
+      "Test notification sent."
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Test notification error:",
+      error
+    );
+
+    alert(
+      "Unable to send the notification."
+    );
+
+  }
+
+}
+
+
+window.enableBankVaultNotifications =
+  enableBankVaultNotifications;
+
+window.sendBankVaultTestNotification =
+  sendBankVaultTestNotification;
+
+
+notificationButton.addEventListener(
+  "click",
+  enableBankVaultNotifications
+);
+
+
+enableNotificationsButton.addEventListener(
+  "click",
+  enableBankVaultNotifications
+);
+
+
+testNotificationButton.addEventListener(
+  "click",
+  sendBankVaultTestNotification
+);
+
+
+/* =========================
+   HTML SAFETY
 ========================= */
 
 function escapeHtml(value) {
@@ -2697,41 +3534,61 @@ function escapeHtml(value) {
 
 
 /* =========================
-EXISTING SESSION
+   EXISTING SESSION
 ========================= */
 
 async function checkExistingSession() {
+
   try {
+
     const {
       data: {
         session
       },
       error
-    } = await supabase.auth.getSession();
+    } =
+      await supabase.auth.getSession();
+
 
     if (error) {
       throw error;
     }
 
+
     if (session) {
+
       await open();
+
     } else {
-      showScreen(welcomeScreen);
+
+      showScreen(
+        welcomeScreen
+      );
+
     }
 
   } catch (error) {
-    console.error("Bank Vault startup error:", error);
+
+    console.error(
+      "Bank Vault startup error:",
+      error
+    );
 
     alert(
       "Bank Vault startup error: " +
-      (error.message || "Unknown error")
+      (
+        error.message ||
+        "Unknown error"
+      )
     );
+
   }
+
 }
 
 
 /* =========================
-AUTH STATE
+   AUTH STATE
 ========================= */
 
 supabase.auth.onAuthStateChange(
@@ -2741,7 +3598,8 @@ supabase.auth.onAuthStateChange(
   ) => {
 
     if (
-      event === "SIGNED_OUT" ||
+      event ===
+      "SIGNED_OUT" ||
       !session
     ) {
 
@@ -2756,224 +3614,50 @@ supabase.auth.onAuthStateChange(
 
 
 /* =========================
-START
+   SERVICE WORKER
+========================= */
+
+if (
+  "serviceWorker" in navigator
+) {
+
+  window.addEventListener(
+    "load",
+    () => {
+
+      navigator.serviceWorker
+        .register(
+          "./sw.js"
+        )
+        .then(
+          registration => {
+
+            console.log(
+              "Bank Vault notification service ready.",
+              registration.scope
+            );
+
+          }
+        )
+        .catch(
+          error => {
+
+            console.error(
+              "Notification service failed:",
+              error
+            );
+
+          }
+        );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   START
 ========================= */
 
 checkExistingSession();
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then(() => {
-        console.log("Bank Vault notification service ready");
-      })
-      .catch((error) => {
-        console.error(
-          "Notification service failed:",
-          error
-        );
-      });
-  });
-}
-
- function urlBase64ToUint8Array(base64String) {
-  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-
-  const base64 = (base64String + padding)
-    .replace(/-/g, "+")
-    .replace(/_/g, "/");
-
-  const rawData = window.atob(base64);
-
-  return Uint8Array.from(
-    [...rawData].map(char => char.charCodeAt(0))
-  );
-}
-
-
-window.enableBankVaultNotifications = async function () {
-  try {
-    if (!("Notification" in window)) {
-      alert("Notifications are not supported on this device.");
-      return;
-    }
-
-    if (!("serviceWorker" in navigator)) {
-      alert("Service workers are not supported.");
-      return;
-    }
-
-    if (!("PushManager" in window)) {
-      alert("Push notifications are not supported on this device.");
-      return;
-    }
-
-    const {
-      data: { user },
-      error: userError
-    } = await supabase.auth.getUser();
-
-    if (userError || !user) {
-      alert("Please log in first.");
-      return;
-    }
-
-    const permission = await Notification.requestPermission();
-
-    if (permission !== "granted") {
-      if (permission === "denied") {
-        alert(
-          "Notifications are blocked. Enable them in your browser settings."
-        );
-      } else {
-        alert("Notification permission was not granted.");
-      }
-
-      return;
-    }
-
-    const registration = await navigator.serviceWorker.ready;
-
-    let subscription =
-      await registration.pushManager.getSubscription();
-
-    if (!subscription) {
-      subscription =
-        await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-
-          applicationServerKey:
-            urlBase64ToUint8Array(
-              "BI7n11elHSW2ommddDiRJHzLq5E-KlvH8orqxSU3bqMxnzhHYSJVWj11vtRGcXfC6C1xWsp9fVBynQajtAmC5R4"
-            )
-        });
-    }
-
-    const subscriptionJson =
-      subscription.toJSON();
-
-    const { error: saveError } =
-      await supabase
-        .from("push_subscriptions")
-        .upsert(
-          {
-            user_id: user.id,
-            endpoint: subscriptionJson.endpoint,
-            p256dh: subscriptionJson.keys.p256dh,
-            auth: subscriptionJson.keys.auth
-          },
-          {
-            onConflict: "endpoint"
-          }
-        );
-
-    if (saveError) {
-      console.error(
-        "Subscription save error:",
-        saveError
-      );
-
-      alert(
-        "Notification permission worked, but the device subscription could not be saved."
-      );
-
-      return;
-    }
-
-    console.log(
-      "Bank Vault push subscription saved:",
-      subscriptionJson
-    );
-
-    alert(
-      "Bank Vault notifications are enabled on this device."
-    );
-
-  } catch (error) {
-    console.error(
-      "Notification subscription error:",
-      error
-    );
-
-    alert(
-      "Unable to enable notifications."
-    );
-  }
-};
-window.sendBankVaultTestNotification = async function () {
-  try {
-    const {
-      data: { session },
-      error: sessionError
-    } = await supabase.auth.getSession();
-
-    if (sessionError || !session) {
-      alert("Please log in first.");
-      return;
-    }
-
-    const { data, error } =
-      await supabase.functions.invoke(
-        "send-push",
-        {
-          body: {
-            title: "Bank Vault",
-            body: "Your Bank Vault push notifications are working.",
-            url: "/"
-          }
-        }
-      );
-
-    if (error) {
-      console.error(
-        "Push function error:",
-        error
-      );
-
-      alert(
-  "Push error: " +
-  (error?.message || "Unknown error")
-);
-
-      return;
-    }
-
-    console.log(
-      "Push notification result:",
-      data
-    );
-
-    
-
-  } catch (error) {
-    console.error(
-      "Test notification error:",
-      error
-    );
-
-    alert(
-      "Unable to send the notification."
-      );
-      
-    
-  }
-};
-/* =========================
-AUTO TEST NOTIFICATION
-========================= */
-
-setTimeout(async () => {
-
-  const {
-    data: {
-      session
-    }
-  } = await supabase.auth.getSession();
-  if (!session) {
-    return;
-  }
-
-  await window.sendBankVaultTestNotification();
-
-}, 5000);

@@ -1,0 +1,19 @@
+{
+  "name": "Bank Vault",
+  "short_name": "Bank Vault",
+  "description": "Securely organize your financial information.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07110d",
+  "theme_color": "#07110d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "images/bank-vault.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
