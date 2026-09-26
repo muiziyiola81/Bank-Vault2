@@ -62,6 +62,120 @@ const settingsScreen =
 const profileScreen =
   document.getElementById("profileScreen");
 
+const changeMasterPasswordScreen =
+  document.getElementById(
+    "changeMasterPasswordScreen"
+  );
+
+const changeMasterPasswordForm =
+  document.getElementById(
+    "changeMasterPasswordForm"
+  );
+
+const currentMasterPasswordInput =
+  document.getElementById(
+    "currentMasterPasswordInput"
+  );
+
+const newMasterPasswordInput =
+  document.getElementById(
+    "newMasterPasswordInput"
+  );
+
+const confirmNewMasterPasswordInput =
+  document.getElementById(
+    "confirmNewMasterPasswordInput"
+  );
+
+const changeMasterPasswordError =
+  document.getElementById(
+    "changeMasterPasswordError"
+  );
+
+const changeMasterPasswordBackButton =
+  document.getElementById(
+    "changeMasterPasswordBackButton"
+  );
+const privacyPolicyScreen =
+  document.getElementById("privacyPolicyScreen");
+
+const privacyPolicyButton =
+  document.getElementById("privacyPolicyButton");
+
+const privacyPolicyBackButton =
+  document.getElementById("privacyPolicyBackButton");
+const appearanceScreen =
+  document.getElementById(
+    "appearanceScreen"
+  );
+
+const appearanceButton =
+  document.getElementById(
+    "appearanceButton"
+  );
+
+const appearanceBackButton =
+  document.getElementById(
+    "appearanceBackButton"
+  );
+
+const lightModeButton =
+  document.getElementById(
+    "lightModeButton"
+  );
+
+const darkModeButton =
+  document.getElementById(
+    "darkModeButton"
+  );
+
+const autoLockScreen =
+  document.getElementById("autoLockScreen");
+
+const autoLockButton =
+  document.getElementById("autoLockButton");
+
+const autoLockBackButton =
+  document.getElementById("autoLockBackButton");
+
+autoLockButton.addEventListener("click", () => {
+  showScreen(autoLockScreen);
+});
+
+autoLockBackButton.addEventListener("click", () => {
+  showScreen(settingsScreen);
+});
+
+const autoLockOptions =
+  document.querySelectorAll(".auto-lock-option");
+
+function applyAutoLockSetting(minutes) {
+  localStorage.setItem(
+    "bankVaultAutoLock",
+    String(minutes)
+  );
+
+  autoLockOptions.forEach(option => {
+    option.classList.toggle(
+      "selected",
+      option.dataset.lockTime === String(minutes)
+    );
+  });
+}
+
+const savedAutoLock =
+  localStorage.getItem("bankVaultAutoLock") || "0";
+
+applyAutoLockSetting(savedAutoLock);
+
+autoLockOptions.forEach(option => {
+  option.addEventListener("click", () => {
+    applyAutoLockSetting(
+      option.dataset.lockTime
+    );
+  });
+});
+
 
 /* =========================
    MASTER PASSWORD ELEMENTS
@@ -252,6 +366,11 @@ const menuButton =
     "menuButton"
   );
 
+const appMenu =
+  document.getElementById(
+    "appMenu"
+  );
+
 const adminButton =
   document.getElementById(
     "adminButton"
@@ -282,6 +401,11 @@ const profileButton =
     "profileButton"
   );
 
+const changeMasterPasswordButton =
+  document.getElementById(
+    "changeMasterPasswordButton"
+  );
+
 const profileBackButton =
   document.getElementById(
     "profileBackButton"
@@ -292,10 +416,7 @@ const enableNotificationsButton =
     "enableNotificationsButton"
   );
 
-const testNotificationButton =
-  document.getElementById(
-    "testNotificationButton"
-  );
+
 
 
 /* =========================
@@ -744,7 +865,6 @@ function hideAllScreens() {
 
 }
 
-
 function showScreen(screen) {
 
   hideAllScreens();
@@ -756,6 +876,46 @@ function showScreen(screen) {
 
   screen.classList.add("active");
 
+  const bottomNav =
+    document.querySelector(".bottom-nav");
+
+  const allowedScreens = [
+    dashboardScreen,
+    searchScreen,
+    settingsScreen
+  ];
+
+  if (bottomNav) {
+
+    if (
+  allowedScreens.includes(screen) &&
+  screen.classList.contains("active")
+) {
+  bottomNav.style.display = "grid";
+} else {
+  bottomNav.style.display = "none";
+    }
+
+    document
+      .querySelectorAll(".bottom-nav-button")
+      .forEach(button => {
+        button.classList.remove("active");
+      });
+
+    if (screen === dashboardScreen) {
+      homeNavButton.classList.add("active");
+    }
+
+    if (screen === searchScreen) {
+      searchNavButton.classList.add("active");
+    }
+
+    if (screen === settingsScreen) {
+      settingsNavButton.classList.add("active");
+    }
+
+  }
+
   window.scrollTo({
     top: 0,
     behavior: "instant"
@@ -764,22 +924,9 @@ function showScreen(screen) {
 }
 
 
-function setBottomNav(activeButton) {
 
-  document
-    .querySelectorAll(".bottom-nav-button")
-    .forEach(button => {
-      button.classList.remove("active");
-    });
-
-  if (activeButton) {
-    activeButton.classList.add("active");
-  }
-
-}
-
-
-/* =========================
+      
+      /* =========================
    MASTER PASSWORD
 ========================= */
 
@@ -842,7 +989,9 @@ function showMasterPasswordError(message) {
     message;
 
   masterPasswordError.style.display =
-    message ? "block" : "none";
+    message
+      ? "block"
+      : "none";
 
 }
 
@@ -925,6 +1074,209 @@ function showMasterPasswordUnlock() {
 }
 
 
+async function openDashboardAfterMasterPassword() {
+
+  const {
+    data: {
+      user
+    },
+    error: userError
+  } =
+    await supabase.auth.getUser();
+
+  if (
+    userError ||
+    !user
+  ) {
+
+    console.error(
+      "Could not get current user:",
+      userError
+    );
+
+    showScreen(
+      authScreen
+    );
+
+    return;
+  }
+
+
+  if (
+    user.id ===
+    ADMIN_USER_ID
+  ) {
+
+    adminButton.style.display =
+      "flex";
+
+  } else {
+
+    adminButton.style.display =
+      "none";
+
+  }
+
+
+  const {
+    data: records,
+    error: recordsError
+  } =
+    await supabase
+      .from("user_items")
+      .select("*")
+      .eq(
+        "user_id",
+        user.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+
+  if (recordsError) {
+
+    console.error(
+      "Could not load saved records:",
+      recordsError
+    );
+
+    alert(
+      "Could not load your saved records:\n\n" +
+      recordsError.message
+    );
+
+    userRecords = [];
+
+  } else {
+
+    userRecords =
+      records || [];
+
+  }
+
+
+  updateCounts();
+
+
+  showScreen(
+    dashboardScreen
+  );
+
+  setBottomNav(
+    homeNavButton
+  );
+
+    resetAutoLockTimer();
+
+}
+
+
+/* =========================
+   AUTO-LOCK
+========================= */
+
+let autoLockTimer = null;
+let lastActivityTime = Date.now();
+
+function getAutoLockMinutes() {
+  return Number(
+    localStorage.getItem("bankVaultAutoLock") || "0"
+  );
+}
+
+function resetAutoLockTimer() {
+  lastActivityTime = Date.now();
+
+  if (autoLockTimer) {
+    clearTimeout(autoLockTimer);
+    autoLockTimer = null;
+  }
+
+  const minutes = getAutoLockMinutes();
+
+  if (!minutes) {
+    return;
+  }
+
+  autoLockTimer = setTimeout(
+    checkAutoLock,
+    minutes * 60 * 1000
+  );
+}
+
+function checkAutoLock() {
+  const minutes = getAutoLockMinutes();
+
+  if (!minutes) {
+    return;
+  }
+
+  const elapsed =
+    Date.now() - lastActivityTime;
+
+  const limit =
+    minutes * 60 * 1000;
+
+  if (elapsed >= limit) {
+    lockBankVault();
+  } else {
+    autoLockTimer = setTimeout(
+      checkAutoLock,
+      limit - elapsed
+    );
+  }
+}
+
+function lockBankVault() {
+  if (autoLockTimer) {
+    clearTimeout(autoLockTimer);
+    autoLockTimer = null;
+  }
+
+  showMasterPasswordUnlock();
+}
+
+[
+  "click",
+  "touchstart",
+  "keydown",
+  "scroll"
+].forEach(eventName => {
+  document.addEventListener(
+    eventName,
+    () => {
+      if (
+        masterPasswordMode !== "unlock" ||
+        masterPasswordScreen.classList.contains("active")
+      ) {
+        return;
+      }
+
+      resetAutoLockTimer();
+    },
+    { passive: true }
+  );
+});
+
+document.addEventListener(
+  "visibilitychange",
+  () => {
+    if (
+      document.visibilityState === "visible"
+    ) {
+      checkAutoLock();
+    }
+  }
+);
+
+/* =========================
+   MASTER PASSWORD FORM
+========================= */
+
 masterPasswordForm.addEventListener(
   "submit",
   async event => {
@@ -935,6 +1287,7 @@ masterPasswordForm.addEventListener(
 
       const password =
         masterPasswordInput.value;
+
 
       if (!password) {
 
@@ -955,7 +1308,10 @@ masterPasswordForm.addEventListener(
         await supabase.auth.getUser();
 
 
-      if (userError || !user) {
+      if (
+        userError ||
+        !user
+      ) {
 
         showMasterPasswordError(
           "Your session has expired. Please log in again."
@@ -965,6 +1321,10 @@ masterPasswordForm.addEventListener(
       }
 
 
+      /* =========================
+         CREATE MASTER PASSWORD
+      ========================= */
+
       if (
         masterPasswordMode ===
         "setup"
@@ -973,7 +1333,10 @@ masterPasswordForm.addEventListener(
         const confirmation =
           confirmMasterPasswordInput.value;
 
-        if (password.length < 8) {
+
+        if (
+          password.length < 8
+        ) {
 
           showMasterPasswordError(
             "Your Master Password must be at least 8 characters."
@@ -981,6 +1344,7 @@ masterPasswordForm.addEventListener(
 
           return;
         }
+
 
         if (
           password !==
@@ -1021,6 +1385,10 @@ masterPasswordForm.addEventListener(
         return;
       }
 
+
+      /* =========================
+         UNLOCK MASTER PASSWORD
+      ========================= */
 
       const savedHash =
         localStorage.getItem(
@@ -1069,6 +1437,7 @@ masterPasswordForm.addEventListener(
 
       await openDashboardAfterMasterPassword();
 
+
     } catch (error) {
 
       console.error(
@@ -1080,6 +1449,272 @@ masterPasswordForm.addEventListener(
         error.message ||
         "Unable to unlock Bank Vault."
       );
+
+    }
+
+  }
+);
+
+
+/* =========================
+   CHANGE MASTER PASSWORD
+========================= */
+
+changeMasterPasswordButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      changeMasterPasswordScreen
+    );
+
+    currentMasterPasswordInput.value =
+      "";
+
+    newMasterPasswordInput.value =
+      "";
+
+    confirmNewMasterPasswordInput.value =
+      "";
+
+    changeMasterPasswordError.textContent =
+      "";
+
+    changeMasterPasswordError.style.display =
+      "none";
+
+    setTimeout(() => {
+
+      currentMasterPasswordInput.focus();
+
+    }, 100);
+
+  }
+);
+
+
+changeMasterPasswordBackButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      settingsScreen
+    );
+
+  }
+);
+
+
+changeMasterPasswordForm.addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+
+    try {
+
+      const currentPassword =
+        currentMasterPasswordInput.value;
+
+      const newPassword =
+        newMasterPasswordInput.value;
+
+      const confirmPassword =
+        confirmNewMasterPasswordInput.value;
+
+
+      changeMasterPasswordError.textContent =
+        "";
+
+      changeMasterPasswordError.style.display =
+        "none";
+
+
+      if (
+        !currentPassword ||
+        !newPassword ||
+        !confirmPassword
+      ) {
+
+        changeMasterPasswordError.textContent =
+          "Please fill in all password fields.";
+
+        changeMasterPasswordError.style.display =
+          "block";
+
+        return;
+      }
+
+
+      if (
+        newPassword.length < 8
+      ) {
+
+        changeMasterPasswordError.textContent =
+          "Your new Master Password must be at least 8 characters.";
+
+        changeMasterPasswordError.style.display =
+          "block";
+
+        return;
+      }
+
+
+      if (
+        newPassword !==
+        confirmPassword
+      ) {
+
+        changeMasterPasswordError.textContent =
+          "The new passwords do not match.";
+
+        changeMasterPasswordError.style.display =
+          "block";
+
+        return;
+      }
+
+
+      const {
+        data: {
+          user
+        },
+        error: userError
+      } =
+        await supabase.auth.getUser();
+
+
+      if (
+        userError ||
+        !user
+      ) {
+
+        changeMasterPasswordError.textContent =
+          "Your session has expired. Please log in again.";
+
+        changeMasterPasswordError.style.display =
+          "block";
+
+        return;
+      }
+
+
+      const masterPasswordKey =
+        getMasterPasswordKey(
+          user.id
+        );
+
+
+      const savedHash =
+        localStorage.getItem(
+          masterPasswordKey
+        );
+
+
+      if (!savedHash) {
+
+        changeMasterPasswordError.textContent =
+          "No Master Password is currently set.";
+
+        changeMasterPasswordError.style.display =
+          "block";
+
+        return;
+      }
+
+
+      const currentHash =
+        await hashMasterPassword(
+          currentPassword
+        );
+
+
+      if (
+        currentHash !==
+        savedHash
+      ) {
+
+        changeMasterPasswordError.textContent =
+          "The current Master Password is incorrect.";
+
+        changeMasterPasswordError.style.display =
+          "block";
+
+        currentMasterPasswordInput.value =
+          "";
+
+        currentMasterPasswordInput.focus();
+
+        return;
+      }
+
+
+      const newHash =
+        await hashMasterPassword(
+          newPassword
+        );
+
+
+      localStorage.setItem(
+        masterPasswordKey,
+        newHash
+      );
+
+
+      /* Verify that the new password was actually saved. */
+
+      const verifyHash =
+        localStorage.getItem(
+          masterPasswordKey
+        );
+
+
+      if (
+        verifyHash !==
+        newHash
+      ) {
+
+        throw new Error(
+          "The new Master Password could not be saved on this device."
+        );
+
+      }
+
+
+      currentMasterPasswordInput.value =
+        "";
+
+      newMasterPasswordInput.value =
+        "";
+
+      confirmNewMasterPasswordInput.value =
+        "";
+
+
+      alert(
+        "Your Master Password has been changed successfully."
+      );
+
+
+      showScreen(
+        settingsScreen
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "Change Master Password error:",
+        error
+      );
+
+      changeMasterPasswordError.textContent =
+        error.message ||
+        "Unable to change your Master Password.";
+
+      changeMasterPasswordError.style.display =
+        "block";
 
     }
 
@@ -1130,53 +1765,7 @@ async function open() {
 }
 
 
-async function openDashboardAfterMasterPassword() {
 
-  const {
-    data: {
-      user
-    }
-  } =
-    await supabase.auth.getUser();
-
-
-  if (!user) {
-
-    showScreen(
-      authScreen
-    );
-
-    return;
-  }
-
-
-  if (
-    user.id ===
-    ADMIN_USER_ID
-  ) {
-
-    adminButton.style.display =
-      "flex";
-
-  } else {
-
-    adminButton.style.display =
-      "none";
-
-  }
-
-
-  showScreen(
-    dashboardScreen
-  );
-
-  setBottomNav(
-    homeNavButton
-  );
-
-  await loadRecords();
-
-}
 
 
 /* =========================
@@ -1450,18 +2039,17 @@ authForm.addEventListener(
 /* =========================
    LOAD RECORDS
 ========================= */
-
 async function loadRecords() {
 
   const {
     data: {
       user
-    }
+    },
+    error: userError
   } =
     await supabase.auth.getUser();
 
-
-  if (!user) {
+  if (userError || !user) {
     return;
   }
 
@@ -1473,22 +2061,17 @@ async function loadRecords() {
     await supabase
       .from("user_items")
       .select("*")
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
-      );
+      .eq("user_id", user.id)
+      .order("created_at", {
+        ascending: false
+      });
 
 
   if (error) {
 
     console.error(
+      "Could not load records:",
       error
-    );
-
-    alert(
-      "Could not load your records."
     );
 
     return;
@@ -1498,17 +2081,15 @@ async function loadRecords() {
   userRecords =
     data || [];
 
+
   updateCounts();
 
 
   if (selectedCategory) {
-
     renderCategoryRecords();
-
   }
 
 }
-
 
 /* =========================
    ADMIN RECORDS
@@ -1824,7 +2405,12 @@ function renderCategoryRecords() {
                   data-record-id="${escapeHtml(record.id)}"
                   aria-label="Delete record"
                 >
-                  ×
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M4 7h16"></path>
+  <path d="M10 11v6M14 11v6"></path>
+  <path d="M6 7l1 14h10l1-14"></path>
+  <path d="M9 7V4h6v3"></path>
+</svg>
                 </button>
 
               </div>
@@ -2007,7 +2593,6 @@ function renderCategoryRecords() {
 /* =========================
    FORMAT RECORD
 ========================= */
-
 function formatRecordContent(
   content
 ) {
@@ -2017,7 +2602,7 @@ function formatRecordContent(
     return `
       <div
         style="
-          color:#718078;
+          color:#6b7f99;
           font-size:14px;
         "
       >
@@ -2052,9 +2637,9 @@ function formatRecordContent(
           return `
             <div
               style="
-                margin-bottom:10px;
-                line-height:1.6;
-                color:#d8e0dc;
+                margin-bottom:6px;
+                line-height:1.4;
+                color:#29476b;
               "
             >
               ${escapeHtml(line)}
@@ -2084,15 +2669,15 @@ function formatRecordContent(
         return `
           <div
             style="
-              margin-bottom:12px;
+              margin-bottom:7px;
             "
           >
 
             <div
               style="
-                color:#718078;
-                font-size:12px;
-                margin-bottom:4px;
+                color:#6b7f99;
+                font-size:11px;
+                margin-bottom:2px;
               "
             >
               ${escapeHtml(label)}
@@ -2100,9 +2685,9 @@ function formatRecordContent(
 
             <div
               style="
-                color:#ffffff;
+                color:#29476b;
                 font-size:14px;
-                line-height:1.5;
+                line-height:1.35;
                 overflow-wrap:anywhere;
               "
             >
@@ -2117,6 +2702,9 @@ function formatRecordContent(
     .join("");
 
 }
+              
+
+                
 
 
 /* =========================
@@ -2885,7 +3473,7 @@ homeNavButton.addEventListener(
       dashboardScreen
     );
 
-    setBottomNav(
+        setBottomNav(
       homeNavButton
     );
 
@@ -2927,6 +3515,78 @@ settingsBackButton.addEventListener(
 
   }
 );
+/* =========================
+   PRIVACY POLICY
+========================= */
+
+privacyPolicyButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      privacyPolicyScreen
+    );
+
+  }
+);
+
+
+privacyPolicyBackButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      settingsScreen
+    );
+
+  }
+);
+
+appearanceButton.addEventListener(
+  "click",
+  () => {
+
+    appMenu.style.display =
+      "none";
+
+    showScreen(
+      appearanceScreen
+    );
+
+  }
+);
+
+
+
+
+appearanceBackButton.addEventListener(
+  "click",
+  () => {
+
+    showScreen(
+      dashboardScreen
+    );
+
+  }
+);
+
+const accentColorScreen =
+  document.getElementById("accentColorScreen");
+
+const accentColorButton =
+  document.getElementById("accentColorButton");
+
+const accentColorBackButton =
+  document.getElementById("accentColorBackButton");
+
+accentColorButton.addEventListener("click", () => {
+  appMenu.style.display = "none";
+  showScreen(accentColorScreen);
+});
+
+accentColorBackButton.addEventListener("click", () => {
+  showScreen(dashboardScreen);
+});
 
 
 /* =========================
@@ -2943,6 +3603,31 @@ profileButton.addEventListener(
 
     await loadProfileData();
 
+  }
+);
+
+changeMasterPasswordButton.addEventListener(
+  "click",
+  () => {
+    showScreen(changeMasterPasswordScreen);
+
+    currentMasterPasswordInput.value = "";
+    newMasterPasswordInput.value = "";
+    confirmNewMasterPasswordInput.value = "";
+
+    changeMasterPasswordError.textContent = "";
+    changeMasterPasswordError.style.display = "none";
+
+    setTimeout(() => {
+      currentMasterPasswordInput.focus();
+    }, 100);
+  }
+);
+
+changeMasterPasswordBackButton.addEventListener(
+  "click",
+  () => {
+    showScreen(settingsScreen);
   }
 );
 
@@ -2988,18 +3673,56 @@ async function loadProfileData() {
       "profileEmail"
     );
 
+  const profileFullName =
+    document.getElementById(
+      "profileFullName"
+    );
+
+  const profileEmailDetail =
+    document.getElementById(
+      "profileEmailDetail"
+    );
+
   const profileUserId =
     document.getElementById(
       "profileUserId"
     );
 
+  const profileCreatedAt =
+    document.getElementById(
+      "profileCreatedAt"
+    );
+
+  const profileLastSignIn =
+    document.getElementById(
+      "profileLastSignIn"
+    );
+
+  const profileStatus =
+    document.getElementById(
+      "profileStatus"
+    );
+
+
+const fullName =
+  user.user_metadata?.full_name ||
+  user.user_metadata?.name ||
+  user.email?.split("@")[0] ||
+  "Not provided";
+
 
   if (profileName) {
 
     profileName.textContent =
-      user.user_metadata?.full_name ||
-      user.user_metadata?.name ||
-      "Bank Vault User";
+      fullName;
+
+  }
+
+
+  if (profileFullName) {
+
+    profileFullName.textContent =
+      fullName;
 
   }
 
@@ -3013,6 +3736,15 @@ async function loadProfileData() {
   }
 
 
+  if (profileEmailDetail) {
+
+    profileEmailDetail.textContent =
+      user.email ||
+      "Not available";
+
+  }
+
+
   if (profileUserId) {
 
     profileUserId.textContent =
@@ -3021,8 +3753,40 @@ async function loadProfileData() {
 
   }
 
-}
 
+  if (profileCreatedAt) {
+
+    profileCreatedAt.textContent =
+      user.created_at
+        ? new Date(
+            user.created_at
+          ).toLocaleString()
+        : "Not available";
+
+  }
+
+
+  if (profileLastSignIn) {
+
+    profileLastSignIn.textContent =
+      user.last_sign_in_at
+        ? new Date(
+            user.last_sign_in_at
+          ).toLocaleString()
+        : "Not available";
+
+  }
+
+
+  if (profileStatus) {
+
+    profileStatus.textContent =
+      user.aud ||
+      "Active";
+
+  }
+
+}
 
 /* =========================
    LOGOUT
@@ -3079,11 +3843,35 @@ logoutButton.addEventListener(
 
 menuButton.addEventListener(
   "click",
-  () => {
+  event => {
 
-    alert(
-      "Bank Vault\n\nOrganize and store your financial information using your own account. Your records are stored in Supabase and are available after authentication."
-    );
+    event.stopPropagation();
+
+    const isOpen =
+      appMenu.style.display === "block";
+
+    appMenu.style.display =
+      isOpen
+        ? "none"
+        : "block";
+
+  }
+);
+
+
+document.addEventListener(
+  "click",
+  event => {
+
+    if (
+      !appMenu.contains(event.target) &&
+      event.target !== menuButton
+    ) {
+
+      appMenu.style.display =
+        "none";
+
+    }
 
   }
 );
@@ -3382,118 +4170,16 @@ async function enableBankVaultNotifications() {
 }
 
 
-async function sendBankVaultTestNotification() {
 
-  try {
-
-    const {
-      data: {
-        session
-      },
-      error: sessionError
-    } =
-      await supabase.auth.getSession();
-
-
-    if (
-      sessionError ||
-      !session
-    ) {
-
-      alert(
-        "Please log in first."
-      );
-
-      return;
-    }
-
-
-    const {
-      data,
-      error
-    } =
-      await supabase.functions.invoke(
-        "send-push",
-        {
-          body: {
-            title:
-              "Bank Vault",
-            body:
-              "Your Bank Vault push notifications are working.",
-            url:
-              "./"
-          }
-        }
-      );
-
-
-    if (error) {
-
-      console.error(
-        "Push function error:",
-        error
-      );
-
-      alert(
-        "Push error: " +
-        (
-          error.message ||
-          "Unknown error"
-        )
-      );
-
-      return;
-    }
-
-
-    console.log(
-      "Push notification result:",
-      data
-    );
-
-
-    alert(
-      "Test notification sent."
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Test notification error:",
-      error
-    );
-
-    alert(
-      "Unable to send the notification."
-    );
-
-  }
-
-}
 
 
 window.enableBankVaultNotifications =
   enableBankVaultNotifications;
 
-window.sendBankVaultTestNotification =
-  sendBankVaultTestNotification;
-
-
-notificationButton.addEventListener(
-  "click",
-  enableBankVaultNotifications
-);
-
 
 enableNotificationsButton.addEventListener(
   "click",
   enableBankVaultNotifications
-);
-
-
-testNotificationButton.addEventListener(
-  "click",
-  sendBankVaultTestNotification
 );
 
 
@@ -3661,3 +4347,123 @@ if (
 ========================= */
 
 checkExistingSession();
+
+
+
+/* =========================
+   APPEARANCE
+========================= */
+
+function applyTheme(theme) {
+
+  document.documentElement.dataset.theme =
+    theme;
+
+  localStorage.setItem(
+    "bankVaultTheme",
+    theme
+  );
+
+}
+
+
+const savedTheme =
+  localStorage.getItem(
+    "bankVaultTheme"
+  ) ||
+  "light";
+
+applyTheme(
+  savedTheme
+);
+
+
+lightModeButton.addEventListener(
+  "click",
+  () => {
+
+    applyTheme(
+      "light"
+    );
+
+  }
+);
+
+
+darkModeButton.addEventListener(
+  "click",
+  () => {
+
+    applyTheme(
+      "dark"
+    );
+
+  }
+);
+
+
+function applyAccentColor(accent) {
+  const colors = {
+    blue: "#0847A6",
+    green: "#20BD6D",
+    purple: "#7C3AED",
+    orange: "#F97316",
+    red: "#DC2626",
+    teal: "#0D9488"
+  };
+
+  const selectedColor = colors[accent] || colors.blue;
+
+  document.documentElement.style.setProperty(
+    "--accent-color",
+    selectedColor
+  );
+
+  localStorage.setItem(
+    "bankVaultAccentColor",
+    accent
+  );
+
+  document
+    .querySelectorAll(".accent-color-card")
+    .forEach(card => {
+      card.classList.toggle(
+        "selected",
+        card.dataset.accent === accent
+      );
+    });
+}
+
+const savedAccentColor =
+  localStorage.getItem(
+    "bankVaultAccentColor"
+  ) || "blue";
+
+applyAccentColor(
+  savedAccentColor
+);
+
+
+document
+  .querySelectorAll(
+    ".accent-color-card"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const accent =
+            button.dataset.accent;
+
+          applyAccentColor(
+            accent
+          );
+
+        }
+      );
+
+    }
+  );

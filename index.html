@@ -9,9 +9,9 @@
   >
 
   <meta
-    name="theme-color"
-    content="#07110d"
-  >
+  name="theme-color"
+  content="#0847a6"
+>
 
   <meta
     name="mobile-web-app-capable"
@@ -123,7 +123,10 @@
         class="back-button"
         type="button"
       >
-        ←
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19 12H5"></path>
+    <path d="M12 19l-7-7 7-7"></path>
+          </svg>
       </button>
 
       <div class="auth-logo">
@@ -339,13 +342,13 @@
   ========================== -->
 
   <section
-    id="dashboardScreen"
-    class="screen"
-  >
+  id="dashboardScreen"
+  class="screen"
+>
 
-    <div class="app-shell">
+  <div class="app-shell">
 
-      <header class="topbar">
+    <header class="topbar">
 
         <div class="brand">
 
@@ -366,23 +369,21 @@
 
         <div class="top-actions">
 
+          
           <button
-            id="notificationButton"
-            class="icon-button"
-            type="button"
-            aria-label="Enable notifications"
-          >
-            🔔
-          </button>
-
-          <button
-            id="adminButton"
-            class="icon-button admin-button"
-            type="button"
-            style="display:none;"
-            aria-label="Admin dashboard"
-          >
-            ⚙
+  id="adminButton"
+  class="icon-button admin-button"
+  type="button"
+  style="display:none;"
+  aria-label="Admin dashboard"
+>
+<svg
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <circle cx="12" cy="8" r="3.5"/>
+  <path d="M5 21c.7-4.2 3-6.5 7-6.5s6.3 2.3 7 6.5"/>
+</svg>
           </button>
 
           <button
@@ -391,9 +392,55 @@
             type="button"
             aria-label="Information"
           >
-            ⋯
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="5" cy="12" r="1.5"></circle>
+    <circle cx="12" cy="12" r="1.5"></circle>
+    <circle cx="19" cy="12" r="1.5"></circle>
+          </svg>
           </button>
+          <div
+  id="appMenu"
+  class="app-menu"
+>
+  <button
+    id="appearanceButton"
+    type="button"
+    class="app-menu-item"
+  >
+    <span class="app-menu-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m4.93 19.07 1.41-1.41"></path>
+        <path d="m17.66 6.34 1.41-1.41"></path>
+      </svg>
+    </span>
 
+    <span>Appearance</span>
+  </button>
+
+  <button
+    id="accentColorButton"
+    type="button"
+    class="app-menu-item"
+  >
+    <span class="app-menu-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m14 4 6 6"></path>
+        <path d="M13 5 5 13l-1 6 6-1 8-8"></path>
+        <path d="m16 2 6 6"></path>
+        <path d="M4 20c2.5 0 4-1 4-3"></path>
+      </svg>
+    </span>
+
+    <span>Accent Color</span>
+  </button>
+          </div>
         </div>
 
       </header>
@@ -416,7 +463,12 @@
           </div>
 
           <div class="total-card-icon">
-            🏦
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 10h18"></path>
+    <path d="M5 10v8M9 10v8M15 10v8M19 10v8"></path>
+    <path d="M2 18h20"></path>
+    <path d="M12 3 2 8h20L12 3Z"></path>
+  </svg>
           </div>
 
         </div>
@@ -425,14 +477,22 @@
         <div class="security-badge dashboard-security">
 
           <span class="security-icon">
-            ✓
+  <svg viewBox="0 0 48 48" aria-hidden="true">
+    <path
+      d="M24 4 39 10v11c0 10-6.5 18.5-15 23C15.5 39.5 9 31 9 21V10l15-6Z"
+    ></path>
+
+    <path
+      d="m16.5 24 5 5 10-11"
+    ></path>
+  </svg>
           </span>
 
           <div>
-            <strong>Protected by Supabase</strong>
+            <strong>Bank-Grade Financial Security</strong>
 
             <small>
-              Your stored records use account-based access controls.
+              Your financial information is protected with bank-grade security, encrypted storage, and secure account access.
             </small>
           </div>
 
@@ -445,176 +505,203 @@
         </div>
 
 
-        <div class="category-grid">
 
-          <button
-            class="category"
-            data-category="Bank Details"
-            type="button"
-          >
-            <span class="category-icon">🏦</span>
-            <strong>Bank Details</strong>
-            <small class="category-count">0 records</small>
-          </button>
+            <div class="category-grid">
 
-
-          <button
-            class="category"
-            data-category="Cards"
-            type="button"
-          >
-            <span class="category-icon">💳</span>
-            <strong>Cards</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Bank Details"
+    type="button"
+  >
+    <span class="category-icon category-icon-bank">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 10h18M5 10v9M9 10v9M15 10v9M19 10v9M2 19h20M12 3l10 5H2l10-5Z"/>
+      </svg>
+    </span>
+    <strong>Bank Details</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
 
-          <button
-            class="category"
-            data-category="Crypto"
-            type="button"
-          >
-            <span class="category-icon">₿</span>
-            <strong>Crypto</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Cards"
+    type="button"
+  >
+    <span class="category-icon category-icon-card">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="M3 10h18M7 15h4"/>
+      </svg>
+    </span>
+    <strong>Cards</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
 
-          <button
-            class="category"
-            data-category="Digital Wallets"
-            type="button"
-          >
-            <span class="category-icon">👛</span>
-            <strong>Digital Wallets</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Crypto"
+    type="button"
+  >
+    <span class="category-icon category-icon-crypto">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8 3v18M12 3v18M5 7h9a3 3 0 0 1 0 6H5h10a3 3 0 0 1 0 6H5"/>
+      </svg>
+    </span>
+    <strong>Crypto</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
 
-          <button
-            class="category"
-            data-category="Loans"
-            type="button"
-          >
-            <span class="category-icon">💰</span>
-            <strong>Loans</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Digital Wallets"
+    type="button"
+  >
+    <span class="category-icon category-icon-wallet">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 6h15a2 2 0 0 1 2 2v10H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14"/>
+        <path d="M16 12h5M16 12a2 2 0 1 0 0 4h5v-4"/>
+      </svg>
+    </span>
+    <strong>Digital Wallets</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
 
-          <button
-            class="category"
-            data-category="Savings & Investments"
-            type="button"
-          >
-            <span class="category-icon">📈</span>
-            <strong>Savings & Investments</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Loans"
+    type="button"
+  >
+    <span class="category-icon category-icon-loan">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3v18M17 7.5c0-2-2-3.5-5-3.5S7 5.5 7 7.5 9 11 12 11s5 1.5 5 3.5-2 3.5-5 3.5-5-1.5-5-3.5"/>
+      </svg>
+    </span>
+    <strong>Loans</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
 
-          <button
-            class="category"
-            data-category="Bank Contacts"
-            type="button"
-          >
-            <span class="category-icon">📞</span>
-            <strong>Bank Contacts</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Savings & Investments"
+    type="button"
+  >
+    <span class="category-icon category-icon-investment">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 19V9M10 19V5M16 19v-8M22 19V3"/>
+        <path d="M3 5l6 3 6-4 6 2"/>
+      </svg>
+    </span>
+    <strong>Savings &amp; Investments</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
 
-          <button
-            class="category"
-            data-category="Bank Branches"
-            type="button"
-          >
-            <span class="category-icon">📍</span>
-            <strong>Bank Branches</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Bank Contacts"
+    type="button"
+  >
+    <span class="category-icon category-icon-contact">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="7" r="3"/>
+        <path d="M5 21c.6-4 3-6 7-6s6.4 2 7 6"/>
+      </svg>
+    </span>
+    <strong>Bank Contacts</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
 
-          <button
-            class="category"
-            data-category="Beneficiaries"
-            type="button"
-          >
-            <span class="category-icon">👤</span>
-            <strong>Beneficiaries</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Bank Branches"
+    type="button"
+  >
+    <span class="category-icon category-icon-branch">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 10h16M6 10v8M10 10v8M14 10v8M18 10v8M3 20h18M12 3l9 5H3l9-5Z"/>
+      </svg>
+    </span>
+    <strong>Bank Branches</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
 
-          <button
-            class="category"
-            data-category="Payment Details"
-            type="button"
-          >
-            <span class="category-icon">💸</span>
-            <strong>Payment Details</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Beneficiaries"
+    type="button"
+  >
+    <span class="category-icon category-icon-beneficiary">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="9" cy="8" r="3"/>
+        <path d="M3 20c.5-4 2.5-6 6-6s5.5 2 6 6"/>
+        <path d="M17 11v6M14 14h6"/>
+      </svg>
+    </span>
+    <strong>Beneficiaries</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
 
-          <button
-            class="category"
-            data-category="Financial Documents"
-            type="button"
-          >
-            <span class="category-icon">📄</span>
-            <strong>Financial Documents</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Payment Details"
+    type="button"
+  >
+    <span class="category-icon category-icon-payment">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="M3 10h18M7 15h3"/>
+      </svg>
+    </span>
+    <strong>Payment Details</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
 
-          <button
-            class="category"
-            data-category="Other Information"
-            type="button"
-          >
-            <span class="category-icon">📁</span>
-            <strong>Other Information</strong>
-            <small class="category-count">0 records</small>
-          </button>
+  <button
+    class="category"
+    data-category="Financial Documents"
+    type="button"
+  >
+    <span class="category-icon category-icon-document">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 3h8l4 4v14H6z"/>
+        <path d="M14 3v5h4M9 13h6M9 17h6"/>
+      </svg>
+    </span>
+    <strong>Financial Documents</strong>
+    <small class="category-count">0 records</small>
+  </button>
 
-        </div>
+
+  <button
+    class="category"
+    data-category="Other Information"
+    type="button"
+  >
+    <span class="category-icon category-icon-other">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 7h6l2 2h8v10H4z"/>
+        <path d="M4 7V5h6l2 2"/>
+      </svg>
+    </span>
+    <strong>Other Information</strong>
+    <small class="category-count">0 records</small>
+  </button>
+
+            </div>
 
       </main>
 
 
-      <nav class="bottom-nav">
 
-        <button
-          id="homeNavButton"
-          class="bottom-nav-button active"
-          type="button"
-        >
-          <span>⌂</span>
-          <small>Home</small>
-        </button>
-
-
-        <button
-          id="searchNavButton"
-          class="bottom-nav-button"
-          type="button"
-        >
-          <span>⌕</span>
-          <small>Search</small>
-        </button>
-
-
-        <button
-          id="settingsNavButton"
-          class="bottom-nav-button"
-          type="button"
-        >
-          <span>⚙</span>
-          <small>Settings</small>
-        </button>
-
-      </nav>
 
     </div>
 
@@ -639,7 +726,10 @@
           class="back-button"
           type="button"
         >
-          ←
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19 12H5"></path>
+    <path d="M12 19l-7-7 7-7"></path>
+            </svg>
         </button>
 
         <div>
@@ -662,202 +752,754 @@
   </section>
 
 
-  <!-- =========================
-       SETTINGS
-  ========================== -->
-
-  <section
-    id="settingsScreen"
-    class="screen"
-  >
-
-    <div class="page-container">
-
-      <div class="page-header">
-
-        <button
-          id="settingsBackButton"
-          class="back-button"
-          type="button"
-        >
-          ←
-        </button>
-
-        <div>
-          <h1>Settings</h1>
-          <p>Manage your Bank Vault account.</p>
-        </div>
-
-      </div>
 
 
-      <div class="settings-card">
-
-        <button
-          id="profileButton"
-          class="settings-row"
-          type="button"
-        >
-          <span class="settings-row-icon">👤</span>
-
-          <span>
-            <strong>Profile</strong>
-            <small>View your account information.</small>
-          </span>
-
-          <span>›</span>
-        </button>
+      
 
 
-        <button
-          id="enableNotificationsButton"
-          class="settings-row"
-          type="button"
-        >
-          <span class="settings-row-icon">🔔</span>
+    <!-- =========================
+     SETTINGS
+========================== -->
 
-          <span>
-            <strong>Notifications</strong>
-            <small>Enable Bank Vault push notifications.</small>
-          </span>
+<section
+  id="settingsScreen"
+  class="screen"
+>
 
-          <span>›</span>
-        </button>
+  <div class="page-container">
 
+    <div class="page-header">
 
-        <button
-          id="testNotificationButton"
-          class="settings-row"
-          type="button"
-        >
-          <span class="settings-row-icon">📨</span>
+      <button
+        id="settingsBackButton"
+        class="back-button"
+        type="button"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </button>
 
-          <span>
-            <strong>Test Notification</strong>
-            <small>Send a test push notification.</small>
-          </span>
-
-          <span>›</span>
-        </button>
-
-
-        <button
-          id="logoutButton"
-          class="settings-row logout-row"
-          type="button"
-        >
-          <span class="settings-row-icon">↪</span>
-
-          <span>
-            <strong>Log Out</strong>
-            <small>Sign out of this Bank Vault account.</small>
-          </span>
-
-          <span>›</span>
-        </button>
-
+      <div>
+        <h1>Settings</h1>
+        <p>Manage your Bank Vault account.</p>
       </div>
 
     </div>
 
-  </section>
+
+    <div class="settings-card">
+
+      <!-- PROFILE -->
+
+      <button
+        id="profileButton"
+        class="settings-row"
+        type="button"
+      >
+
+        <span class="settings-row-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle
+              cx="12"
+              cy="8"
+              r="3.5"
+            ></circle>
+
+            <path
+              d="M5 21c.7-4.2 3-6.5 7-6.5s6.3 2.3 7 6.5"
+            ></path>
+          </svg>
+        </span>
+
+        <span>
+          <strong>Profile</strong>
+          <small>View your account information.</small>
+        </span>
+
+        <span>›</span>
+
+      </button>
 
 
-  <!-- =========================
-       PROFILE
-  ========================== -->
+      <!-- CHANGE MASTER PASSWORD -->
 
-  <section
-    id="profileScreen"
-    class="screen"
-  >
+      <button
+        id="changeMasterPasswordButton"
+        class="settings-row"
+        type="button"
+      >
 
-    <div class="page-container">
+        <span class="settings-row-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
 
-      <div class="page-header">
+            <path
+              d="M7 10V8a5 5 0 0 1 10 0v2"
+            ></path>
 
-        <button
-          id="profileBackButton"
-          class="back-button"
-          type="button"
-        >
-          ←
-        </button>
+            <rect
+              x="4"
+              y="10"
+              width="16"
+              height="11"
+              rx="2"
+            ></rect>
 
-        <div>
-          <h1>Profile</h1>
-          <p>Your Bank Vault account details.</p>
-        </div>
+            <circle
+              cx="12"
+              cy="15"
+              r="1.5"
+            ></circle>
 
+          </svg>
+        </span>
+
+        <span>
+          <strong>Change Master Password</strong>
+          <small>Update your Bank Vault unlock password.</small>
+        </span>
+
+        <span>›</span>
+
+      </button>
+
+      <!-- AUTO-LOCK -->
+
+<button
+  id="autoLockButton"
+  class="settings-row"
+  type="button"
+>
+
+  <span class="settings-row-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 10V8a5 5 0 0 1 10 0v2"></path>
+      <rect x="4" y="10" width="16" height="11" rx="2"></rect>
+      <circle cx="12" cy="15" r="1.5"></circle>
+    </svg>
+  </span>
+
+  <span>
+    <strong>Auto-Lock</strong>
+    <small>Automatically lock Bank Vault after inactivity.</small>
+  </span>
+
+  <span>›</span>
+
+</button>
+
+
+      <!-- NOTIFICATIONS -->
+
+      <button
+        id="enableNotificationsButton"
+        class="settings-row"
+        type="button"
+      >
+
+        <span class="settings-row-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+
+            <path
+              d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+            ></path>
+
+            <path
+              d="M10 21h4"
+            ></path>
+
+          </svg>
+        </span>
+
+        <span>
+          <strong>Notifications</strong>
+          <small>Enable Bank Vault push notifications.</small>
+        </span>
+
+        <span>›</span>
+
+      </button>
+
+
+      <!-- PRIVACY POLICY -->
+
+      <button
+        id="privacyPolicyButton"
+        class="settings-row"
+        type="button"
+      >
+
+        <span class="settings-row-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+
+            <path
+              d="M12 3l7 3v5c0 4.8-2.9 8.5-7 10-4.1-1.5-7-5.2-7-10V6l7-3Z"
+            ></path>
+
+            <path
+              d="M9 12l2 2 4-4"
+            ></path>
+
+          </svg>
+        </span>
+
+        <span>
+          <strong>Privacy Policy</strong>
+          <small>Learn how Bank Vault handles your information.</small>
+        </span>
+
+        <span>›</span>
+
+      </button>
+
+
+      <!-- LOG OUT -->
+
+      <button
+        id="logoutButton"
+        class="settings-row logout-row"
+        type="button"
+      >
+
+        <span class="settings-row-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+
+            <path
+              d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5"
+            ></path>
+
+            <path
+              d="M13 8l4 4-4 4"
+            ></path>
+
+            <path
+              d="M17 12H8"
+            ></path>
+
+          </svg>
+        </span>
+
+        <span>
+          <strong>Log Out</strong>
+          <small>Sign out of this Bank Vault account.</small>
+        </span>
+
+        <span>›</span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+  <section id="autoLockScreen" class="screen">
+
+  <div class="page-container">
+
+    <div class="page-header">
+
+      <button
+        id="autoLockBackButton"
+        class="back-button"
+        type="button"
+        aria-label="Back"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <div>
+        <h1>Auto-Lock</h1>
+        <p>Choose when Bank Vault locks after inactivity.</p>
       </div>
 
+    </div>
 
-      <div class="profile-card">
+    <div class="auto-lock-options">
 
-        <div class="profile-top">
+      <button
+        class="auto-lock-option"
+        data-lock-time="0"
+        type="button"
+      >
+        <strong>Off</strong>
+        <small>Keep Bank Vault unlocked until you lock it.</small>
+      </button>
 
-          <div class="profile-avatar">
+      <button
+        class="auto-lock-option"
+        data-lock-time="5"
+        type="button"
+      >
+        <strong>5 minutes</strong>
+        <small>Lock Bank Vault after 5 minutes of inactivity.</small>
+      </button>
 
-            <img
-              src="images/bank-vault.png"
-              alt="Bank Vault"
-            >
+      <button
+        class="auto-lock-option"
+        data-lock-time="15"
+        type="button"
+      >
+        <strong>15 minutes</strong>
+        <small>Lock Bank Vault after 15 minutes of inactivity.</small>
+      </button>
 
-          </div>
+      <button
+        class="auto-lock-option"
+        data-lock-time="30"
+        type="button"
+      >
+        <strong>30 minutes</strong>
+        <small>Lock Bank Vault after 30 minutes of inactivity.</small>
+      </button>
 
-          <div>
+    </div>
 
-            <h2 id="profileName">
-              Bank Vault User
-            </h2>
+  </div>
 
-            <p id="profileEmail">
-              No email available
-            </p>
+  </section>
 
-          </div>
+<!-- =========================
+     PRIVACY POLICY
+========================== -->
 
-        </div>
+<section
+  id="privacyPolicyScreen"
+  class="screen"
+>
+
+  <div class="page-container">
+
+    <div class="page-header">
+
+      <button
+        id="privacyPolicyBackButton"
+        class="back-button"
+        type="button"
+        aria-label="Back"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <div>
+        <h1>Privacy Policy</h1>
+        <p>How Bank Vault handles your information.</p>
+      </div>
+
+    </div>
 
 
-        <div class="profile-detail">
+    <div class="privacy-policy-card">
 
-          <span>User ID</span>
+      <h2>Privacy Policy</h2>
 
-          <strong
-            id="profileUserId"
-            class="break-anywhere"
+      <p>
+        This Privacy Policy explains how Bank Vault collects,
+        uses, stores, and manages information when you use the app.
+      </p>
+
+
+      <h3>Information We Collect</h3>
+
+      <p>
+        When you create and use a Bank Vault account, we may
+        collect information such as your name, email address,
+        account identifier, and information that you choose to
+        save in the app.
+      </p>
+
+
+      <h3>Information You Save</h3>
+
+      <p>
+        Bank Vault allows you to organize financial and other
+        account-related information into records. Only information
+        that you choose to enter or upload is stored as part of
+        your records.
+      </p>
+
+
+      <h3>How We Use Your Information</h3>
+
+      <p>
+        Information is used to provide Bank Vault features,
+        authenticate your account, display your saved records,
+        maintain the service, and improve the app.
+      </p>
+
+
+      <h3>Cloud Storage</h3>
+
+      <p>
+        Bank Vault uses Supabase to provide account authentication
+        and cloud database services. Information stored in your
+        account may therefore be processed and stored through
+        Supabase's infrastructure.
+      </p>
+
+
+      <h3>Access to Records</h3>
+
+      <p>
+        Your records are associated with your account. Authorized
+        Bank Vault administrators may have access to stored records
+        when necessary to operate, maintain, troubleshoot, or
+        administer the service.
+      </p>
+
+
+      <h3>Information Sharing</h3>
+
+      <p>
+        Bank Vault does not use your information for purposes
+        unrelated to providing and operating the service. Information
+        may be processed by service providers that are necessary
+        for authentication, storage, hosting, notifications, and
+        other app functions.
+      </p>
+
+
+      <h3>Account Security</h3>
+
+      <p>
+        You are responsible for keeping your account credentials
+        and Master Password private. Do not share passwords,
+        authentication codes, or other account credentials with
+        anyone.
+      </p>
+
+
+      <h3>Notifications</h3>
+
+      <p>
+        If you enable notifications, Bank Vault may use push
+        notification services to send account or application
+        notifications to your device.
+      </p>
+
+
+      <h3>Your Choices</h3>
+
+      <p>
+        You can manage the information stored in your account
+        through the app. You can also sign out of your account.
+        If you want your account or stored information removed,
+        contact the person or organization responsible for
+        operating Bank Vault.
+      </p>
+
+
+      <h3>Children's Privacy</h3>
+
+      <p>
+        Bank Vault is not intended to knowingly collect personal
+        information from children without appropriate permission
+        and supervision.
+      </p>
+
+
+      <h3>Changes to This Policy</h3>
+
+      <p>
+        This Privacy Policy may be updated when Bank Vault's
+        features, data practices, or services change. The updated
+        version will be displayed on this screen.
+      </p>
+
+
+      <h3>Contact</h3>
+
+      <p>
+        If you have questions about this Privacy Policy or how
+        your information is handled, contact the person or
+        organization operating Bank Vault.
+      </p>
+
+
+      <p class="privacy-policy-updated">
+        Last updated: September 2026
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+  
+
+<!-- =========================
+     PROFILE
+========================== -->
+
+<section
+  id="profileScreen"
+  class="screen"
+>
+
+  <div class="page-container">
+
+    <div class="page-header">
+
+      <button
+        id="profileBackButton"
+        class="back-button"
+        type="button"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <div>
+        <h1>Profile</h1>
+        <p>Your Bank Vault account information.</p>
+      </div>
+
+    </div>
+
+
+    <div class="profile-card">
+
+      <div class="profile-top">
+
+        <div class="profile-avatar">
+          <img
+            src="images/bank-vault.png"
+            alt="Bank Vault"
           >
-            Unavailable
-          </strong>
-
         </div>
 
-        <div class="profile-detail">
+        <div>
+          <h2 id="profileName">
+            Bank Vault User
+          </h2>
 
-          <span>Application</span>
-
-          <strong>
-            Bank Vault
-          </strong>
-
+          <p id="profileEmail">
+            No email available
+          </p>
         </div>
 
-        <div class="profile-detail">
+      </div>
 
-          <span>Storage</span>
 
-          <strong>
-            Supabase
-          </strong>
+      <div class="profile-detail">
 
-        </div>
+        <span>Full Name</span>
+
+        <strong id="profileFullName">
+          Not provided
+        </strong>
+
+      </div>
+
+
+      <div class="profile-detail">
+
+        <span>Email Address</span>
+
+        <strong
+          id="profileEmailDetail"
+          class="break-anywhere"
+        >
+          Not available
+        </strong>
+
+      </div>
+
+
+      <div class="profile-detail">
+
+        <span>User ID</span>
+
+        <strong
+          id="profileUserId"
+          class="break-anywhere"
+        >
+          Loading...
+        </strong>
+
+      </div>
+
+
+      <div class="profile-detail">
+
+        <span>Account Created</span>
+
+        <strong id="profileCreatedAt">
+          Loading...
+        </strong>
+
+      </div>
+
+
+      <div class="profile-detail">
+
+        <span>Last Sign In</span>
+
+        <strong id="profileLastSignIn">
+          Loading...
+        </strong>
+
+      </div>
+
+
+      <div class="profile-detail">
+
+        <span>Account Status</span>
+
+        <strong id="profileStatus">
+          Active
+        </strong>
+
+      </div>
+
+
+      <div class="profile-detail">
+
+        <span>Storage</span>
+
+        <strong>
+          Supabase
+        </strong>
 
       </div>
 
     </div>
 
-  </section>
+  </div>
+
+</section>
+
+  
+
+ <!-- =========================
+     CHANGE MASTER PASSWORD
+========================== -->
+
+<section
+  id="changeMasterPasswordScreen"
+  class="screen"
+>
+
+  <div class="page-container">
+
+    <div class="page-header">
+
+      <button
+        id="changeMasterPasswordBackButton"
+        class="back-button"
+        type="button"
+        aria-label="Back"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <div>
+        <h1>Change Master Password</h1>
+
+        <p>
+          Update the password used to unlock Bank Vault.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="master-container">
+
+      <form id="changeMasterPasswordForm">
+
+        <div class="input-group">
+
+          <label for="currentMasterPasswordInput">
+            Current Master Password
+          </label>
+
+          <input
+            id="currentMasterPasswordInput"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter current password"
+            required
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label for="newMasterPasswordInput">
+            New Master Password
+          </label>
+
+          <input
+            id="newMasterPasswordInput"
+            type="password"
+            minlength="8"
+            autocomplete="new-password"
+            placeholder="Enter new password"
+            required
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label for="confirmNewMasterPasswordInput">
+            Confirm New Master Password
+          </label>
+
+          <input
+            id="confirmNewMasterPasswordInput"
+            type="password"
+            minlength="8"
+            autocomplete="new-password"
+            placeholder="Confirm new password"
+            required
+          >
+
+        </div>
+
+
+        <div
+          id="changeMasterPasswordError"
+          class="error-message"
+          style="display:none;"
+        ></div>
+
+
+        <button
+          id="changeMasterPasswordSubmit"
+          class="primary-button"
+          type="submit"
+        >
+          Change Master Password
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+
+
 
 
   <!-- =========================
@@ -881,7 +1523,10 @@
           class="back-button"
           type="button"
         >
-          ←
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19 12H5"></path>
+    <path d="M12 19l-7-7 7-7"></path>
+            </svg>
         </button>
 
         <div>
@@ -926,7 +1571,10 @@
           class="back-button"
           type="button"
         >
-          ←
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19 12H5"></path>
+    <path d="M12 19l-7-7 7-7"></path>
+            </svg>
         </button>
 
         <div>
@@ -979,7 +1627,10 @@
           class="back-button"
           type="button"
         >
-          ←
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19 12H5"></path>
+    <path d="M12 19l-7-7 7-7"></path>
+            </svg>
         </button>
 
         <div>
@@ -1005,6 +1656,301 @@
     </div>
 
   </section>
+
+  <nav class="bottom-nav" style="display: none;">
+
+  <button
+    id="homeNavButton"
+    class="bottom-nav-button active"
+    type="button"
+  >
+    <span>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 10.5 12 3l9 7.5"></path>
+    <path d="M5 9.5V21h14V9.5"></path>
+    <path d="M9 21v-6h6v6"></path>
+  </svg>
+    </span>
+    <small>Home</small>
+  </button>
+
+  <button
+    id="searchNavButton"
+    class="bottom-nav-button"
+    type="button"
+  >
+    <span>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="11" cy="11" r="6.5"></circle>
+    <path d="m16 16 5 5"></path>
+  </svg>
+    </span>
+    <small>Search</small>
+  </button>
+
+  <button
+    id="settingsNavButton"
+    class="bottom-nav-button"
+    type="button"
+  >
+    <span>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M12 2.8l1.1 2.4 2.5.6 2.2-1.2 1.6 1.6-1.2 2.2.6 2.5 2.4 1.1v2.2l-2.4 1.1-.6 2.5 1.2 2.2-1.6 1.6-2.2-1.2-2.5.6-1.1 2.4H9.8l-1.1-2.4-2.5-.6-2.2 1.2-1.6-1.6 1.2-2.2-.6-2.5-2.4-1.1v-2.2l2.4-1.1.6-2.5-1.2-2.2 1.6-1.6 2.2 1.2 2.5-.6 1.1-2.4H12z"></path>
+  </svg>
+    </span>
+    <small>Settings</small>
+  </button>
+
+  </nav>
+
+  <section
+  id="appearanceScreen"
+  class="screen"
+ 
+>
+
+  <div class="page-container">
+
+    <div class="page-header">
+
+      <button
+        id="appearanceBackButton"
+        class="back-button"
+        type="button"
+        aria-label="Back"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <div>
+        <h1>Appearance</h1>
+        <p>Choose how Bank Vault looks.</p>
+      </div>
+
+    </div>
+
+    <div class="appearance-options">
+
+      <button
+        id="lightModeButton"
+        class="appearance-card"
+        type="button"
+      >
+        <span class="appearance-card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m4.93 19.07 1.41-1.41"></path>
+            <path d="m17.66 6.34 1.41-1.41"></path>
+          </svg>
+        </span>
+
+        <strong>Light</strong>
+        <small>Use the light appearance.</small>
+      </button>
+
+
+      <button
+        id="darkModeButton"
+        class="appearance-card"
+        type="button"
+      >
+        <span class="appearance-card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"></path>
+          </svg>
+        </span>
+
+        <strong>Dark</strong>
+        <small>Use the dark appearance.</small>
+      </button>
+
+    </div>
+
+  </div>
+
+  </section>
+
+  <!-- =========================
+     ACCENT COLOR SCREEN
+========================= -->
+  <section id="accentColorScreen" class="screen">  <div class="page-container"><div class="page-header">
+
+  <button
+    id="accentColorBackButton"
+    class="back-button"
+    type="button"
+    aria-label="Back"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M19 12H5"></path>
+      <path d="M12 19l-7-7 7-7"></path>
+    </svg>
+  </button>
+
+  <div>
+    <h1>Accent Color</h1>
+    <p>Choose the color used across Bank Vault.</p>
+  </div>
+
+</div>
+
+<div class="accent-color-options">
+
+  <!-- BLUE -->
+  <button
+    class="accent-color-card"
+    type="button"
+    data-accent="blue"
+  >
+    <svg
+      class="accent-color-preview"
+      viewBox="0 0 40 40"
+      aria-hidden="true"
+    >
+      <circle
+        cx="20"
+        cy="20"
+        r="16"
+        fill="#0847A6"
+      ></circle>
+    </svg>
+
+    <strong>Blue</strong>
+    <small>Classic Bank Vault blue</small>
+  </button>
+
+
+  <!-- GREEN -->
+  <button
+    class="accent-color-card"
+    type="button"
+    data-accent="green"
+  >
+    <svg
+      class="accent-color-preview"
+      viewBox="0 0 40 40"
+      aria-hidden="true"
+    >
+      <circle
+        cx="20"
+        cy="20"
+        r="16"
+        fill="#20BD6D"
+      ></circle>
+    </svg>
+
+    <strong>Green</strong>
+    <small>Fresh and secure</small>
+  </button>
+
+
+  <!-- PURPLE -->
+  <button
+    class="accent-color-card"
+    type="button"
+    data-accent="purple"
+  >
+    <svg
+      class="accent-color-preview"
+      viewBox="0 0 40 40"
+      aria-hidden="true"
+    >
+      <circle
+        cx="20"
+        cy="20"
+        r="16"
+        fill="#7C3AED"
+      ></circle>
+    </svg>
+
+    <strong>Purple</strong>
+    <small>Modern and distinctive</small>
+  </button>
+
+
+  <!-- ORANGE -->
+  <button
+    class="accent-color-card"
+    type="button"
+    data-accent="orange"
+  >
+    <svg
+      class="accent-color-preview"
+      viewBox="0 0 40 40"
+      aria-hidden="true"
+    >
+      <circle
+        cx="20"
+        cy="20"
+        r="16"
+        fill="#F97316"
+      ></circle>
+    </svg>
+
+    <strong>Orange</strong>
+    <small>Warm and energetic</small>
+  </button>
+
+
+  <!-- RED -->
+  <button
+    class="accent-color-card"
+    type="button"
+    data-accent="red"
+  >
+    <svg
+      class="accent-color-preview"
+      viewBox="0 0 40 40"
+      aria-hidden="true"
+    >
+      <circle
+        cx="20"
+        cy="20"
+        r="16"
+        fill="#DC2626"
+      ></circle>
+    </svg>
+
+    <strong>Red</strong>
+    <small>Bold and vibrant</small>
+  </button>
+
+
+  <!-- TEAL -->
+  <button
+    class="accent-color-card"
+    type="button"
+    data-accent="teal"
+  >
+    <svg
+      class="accent-color-preview"
+      viewBox="0 0 40 40"
+      aria-hidden="true"
+    >
+      <circle
+        cx="20"
+        cy="20"
+        r="16"
+        fill="#0D9488"
+      ></circle>
+    </svg>
+
+    <strong>Teal</strong>
+    <small>Calm and modern</small>
+  </button>
+
+</div>
+
+  </div></section>
 
 
   <script
